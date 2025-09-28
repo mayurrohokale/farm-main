@@ -8,6 +8,11 @@ export default {
        serif: ['Merriweather', 'Georgia', 'ui-serif', 'serif'],
        slab: ['"Roboto Slab"', 'ui-serif', 'serif'],
      },
+      fontFamily: {
+       sans: ['Poppins', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+       serif: ['Merriweather', 'Georgia', 'ui-serif', 'serif'],
+       slab: ['"Roboto Slab"', 'ui-serif', 'serif'],
+    },
     },
   },
   plugins: [],

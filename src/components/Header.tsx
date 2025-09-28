@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { TbAlpha } from "react-icons/tb";
 
 
 const Header: React.FC = () => {
@@ -66,6 +67,17 @@ const Header: React.FC = () => {
                  Generations of Quality
                 </p>
               </div>
+              <div className="relative group ml-2">
+                <div className="text-gray-500 px-2 text-lg lg:text-xl">
+                  <TbAlpha aria-hidden="true" />
+                </div>
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs bg-black text-white px-2 py-1 rounded whitespace-nowrap shadow-lg"
+                >
+                  Aplpha Release: under development
+                </span>
+            </div>
             </div>
             
             {/* Desktop Navigation */}

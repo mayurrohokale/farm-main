@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { TbAlpha } from "react-icons/tb";
 
 
 const Header: React.FC = () => {
@@ -43,7 +44,7 @@ const Header: React.FC = () => {
       {/* Main Header */}
       <header className={`fixed top-0 logo-title w-full z-50 transition-all duration-300 ${
         isScrolled 
-          ? 'bg-white/90 backdrop-blur-lg shadow-lg' 
+          ? 'bg-white/90 backdrop-blur-xl shadow-lg' 
           : 'bg-white/95 backdrop-blur-sm shadow-sm'
       }`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -66,6 +67,17 @@ const Header: React.FC = () => {
                  Generations of Quality
                 </p>
               </div>
+              <div className="relative group ml-2">
+                <div className="text-gray-500 px-2 text-lg lg:text-xl">
+                  <TbAlpha aria-hidden="true" />
+                </div>
+                <span
+                  aria-hidden="true"
+                  className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs bg-black text-white px-2 py-1 rounded whitespace-nowrap shadow-lg"
+                >
+                  Aplpha Release: under development
+                </span>
+            </div>
             </div>
             
             {/* Desktop Navigation */}
@@ -199,7 +211,7 @@ const Header: React.FC = () => {
       </header>
 
       {/* Spacer to prevent content overlap */}
-      <div className="h-16 lg:h-20"></div>
+      <div className="h-12 lg:h-18"></div>
     </>
   );
 };

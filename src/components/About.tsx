@@ -145,7 +145,7 @@ const About: React.FC = () => {
               </div>
               <div className="relative overflow-hidden rounded-xl sm:rounded-2xl shadow-lg">
                 <img
-                  src="/images/image.png"
+                  src="/images/mango3.png"
                   alt="Organic Keshar Mangoes"
                   className="w-full h-32 sm:h-40 lg:h-48 object-cover transform hover:scale-105 transition-transform duration-500"
                 />

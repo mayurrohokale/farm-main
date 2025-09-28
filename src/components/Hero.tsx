@@ -5,7 +5,7 @@ import { Sprout, Award, Truck, Droplets, Leaf, ChevronLeft, ChevronRight, Tracto
 // Carousel images with your farm images
 const carouselImages = [
   {
-    url: '/images/image.png',
+    url: '/images/mango3.png',
     alt: 'Premium Organic Mangoes',
     title: '100% Organic Keshar Mangoes',
     description: 'Multiple varieties of premium organic mangoes',

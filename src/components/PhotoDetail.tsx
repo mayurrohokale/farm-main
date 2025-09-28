@@ -27,7 +27,7 @@ const PhotoDetail: React.FC = () => {
     },
     {
       id: 'image',
-      src: '/images/image.png',
+      src: '/images/mango3.png',
       alt: 'Organic Keshar mangoes on trees',
       category: 'Mango',
       title: 'Organic Keshar Mangoes',

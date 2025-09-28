@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Globe, TrendingUp, Sprout, Award, Shield, Target, BarChart3, Leaf, Zap } from 'lucide-react';
+import { Heart, Globe, TrendingUp, Sprout, Award, Shield, Target, BarChart3, Leaf } from 'lucide-react';
 
 const About: React.FC = () => {
   const features = [
@@ -59,13 +59,13 @@ const About: React.FC = () => {
 
   return (
     <section id="about" className="py-12 sm:py-16 lg:py-20 bg-gradient-to-br from-gray-50 via-green-50/20 to-blue-50/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto logo-title px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-full mb-4 sm:mb-6">
             <Sprout className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 mb-4 sm:mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold  text-gray-800 mb-4 sm:mb-6">
             About <span className="text-green-600">Rohokale Farm</span>
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
@@ -168,13 +168,13 @@ const About: React.FC = () => {
             </div>
 
             {/* Floating Achievement Card - Hidden on mobile */}
-            <div className="hidden lg:block absolute top-6 xl:top-8 right-6 xl:right-8 bg-white/95 backdrop-blur-sm rounded-2xl p-4 xl:p-6 shadow-xl border border-gray-100 max-w-xs">
+            {/* <div className="hidden lg:block absolute top-6 xl:top-8 right-6 xl:right-8 bg-white/95 backdrop-blur-sm rounded-2xl p-4 xl:p-6 shadow-xl border border-gray-100 max-w-xs">
               <div className="flex items-center space-x-3 mb-2">
                 <Zap className="w-5 h-5 xl:w-6 xl:h-6 text-green-600" />
                 <span className="font-bold text-gray-800 text-sm xl:text-base">Market Leading</span>
               </div>
               <p className="text-xs xl:text-sm text-gray-600">Exceptional productivity and quality standards</p>
-            </div>
+            </div> */}
           </div>
 
           {/* Content Side - Mobile First */}

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+@layer base {
+  body { @apply font-sans; }
+  h1, h2, h3 { @apply font-serif; }
+  /* helper class to force logo title to Poppins if needed */
+  .logo-title { font-family: "Poppins", Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+}

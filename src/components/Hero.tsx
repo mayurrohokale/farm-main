@@ -74,12 +74,12 @@ const Hero: React.FC = () => {
       },
       {
         icon: <Leaf className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />,
-        value: "Sustainable",
+        value: "Organic",
         label: "Farming",
       },
       {
         icon: <Tractor className="w-8 h-8 md:w-10 md:h-10 text-emerald-400" />,
-        value: "Technology",
+        value: "Tech",
         label: "Driven",
       },
     ],
@@ -165,7 +165,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-[91vh] flex items-center justify-center overflow-hidden bg-gray-900">
+    <section id="home" className="relative min-h-[91vh] logo-title flex items-center justify-center overflow-hidden bg-gray-900">
       {/* Carousel Background */}
       <div className="absolute inset-0 z-0">
         {carouselImages.map((img, idx) => (
@@ -225,8 +225,8 @@ const Hero: React.FC = () => {
       <div className="relative z-10 text-center text-white max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Dynamic Content Based on Current Slide */}
-        <div className="mb-6 md:mb-12 max-w-3xl mx-auto">
-          <h2 className="text-lg sm:text-xl md:text-2xl lg:text-4xl font-bold mb-2 md:mb-4 text-green-400 " >
+        <div className="mb-6 md:mb-12 max-w-3xl mx-auto logo-title">
+          <h2 className="text-lg sm:text-xl underline md:text-2xl lg:text-4xl font-bold mb-2 md:mb-4 text-green-400 " >
             {carouselImages[current].title}
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 leading-relaxed px-4 sm:px-0">

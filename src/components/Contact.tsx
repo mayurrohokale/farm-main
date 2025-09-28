@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Users, Package, CheckCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, Send, MessageCircle, Users, Package, CheckCircle, User2Icon, Navigation } from 'lucide-react';
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -46,9 +46,11 @@ const Contact: React.FC = () => {
     },
     {
       icon: <MapPin className="w-6 h-6 text-green-600" />,
-      title: 'Farm Location',
-      details: ['Rohokale Farm', 'Sarola Advai - Bhoyare Pathar Rd', 'Bhoyare Pathar, Daithane Gunjal', 'Maharashtra 414103, India'],
-      subtitle: 'GPS coordinates available on request'
+      title: 'Farm Locations',
+      details: [
+        'Farm 1: Rohokale Farm, Sarola Advai - Bhoyare Pathar Rd, Bhoyare Pathar, Daithane Gunjal, Maharashtra 414103, India',
+        'Farm 2: Rohokale Farm, Near M55C+5HQ Talpimpri, Sambhajinagar, Maharashtra, India'
+      ],
     },
     {
       icon: <Clock className="w-6 h-6 text-green-600" />,
@@ -58,6 +60,7 @@ const Contact: React.FC = () => {
     }
   ];
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const features = [
     {
       icon: <Package className="w-8 h-8 text-green-600" />,
@@ -73,6 +76,23 @@ const Contact: React.FC = () => {
       icon: <MessageCircle className="w-8 h-8 text-purple-600" />,
       title: '24/7 Support',
       description: 'Quick response to all your farming and product inquiries'
+    }
+  ];
+
+  const farmLocations = [
+    {
+      name: 'Farm 1: Sarola Advai',
+      address: 'Bhoyare Pathar Rd, Bhoyare Pathar, Daithane Gunjal, Maharashtra 414103',
+      mapSrc: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30168.32925282504!2d74.550333!3d19.061928!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcc9fa343c85db%3A0xd69c2b5aeb588e15!2sRohokale%20Farm!5e0!3m2!1sen!2sus!4v1758230308221!5m2!1sen!2sus',
+      features: ['Organic Vegetables', 'Modern Irrigation', 'Visitor Center'],
+      coordinates: '19.061928, 74.550333'
+    },
+    {
+      name: 'Farm 2: Talpimpri',
+      address: 'Near M55C+5HQ Talpimpri, Sambhajinagar, Maharashtra',
+      mapSrc: 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1168.938980125049!2d75.17076141777541!3d19.658015632004204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTnCsDM5JzI4LjciTiA3NcKwMTAnMTcuMyJF!5e1!3m2!1sen!2sin!4v1759053703222!5m2!1sen!2sin',
+      features: ['Fruit Orchards', 'Processing Unit', 'Warehouse'],
+      coordinates: '19.658016, 75.170761'
     }
   ];
 
@@ -94,7 +114,7 @@ const Contact: React.FC = () => {
         </div>
 
         {/* Features Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {features.map((feature, index) => (
             <div key={index} className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 text-center group">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-50 rounded-2xl mb-6 group-hover:bg-green-50 transition-colors">
@@ -104,14 +124,14 @@ const Contact: React.FC = () => {
               <p className="text-gray-600 leading-relaxed">{feature.description}</p>
             </div>
           ))}
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 xl:grid-cols-5 gap-12">
           {/* Contact Information */}
           <div className="xl:col-span-2">
             <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100 h-fit">
               <h3 className="text-3xl font-bold text-gray-800 mb-8 flex items-center gap-3">
-                <Phone className="w-8 h-8 text-green-600" />
+                <User2Icon className="w-8 h-8 text-green-600" />
                 Contact Information
               </h3>
               
@@ -134,27 +154,6 @@ const Contact: React.FC = () => {
                     </div>
                   </div>
                 ))}
-              </div>
-
-              {/* Quick Actions */}
-              <div className="mt-8 pt-8 border-t border-gray-100">
-                <h4 className="font-bold text-gray-800 mb-4">Quick Actions</h4>
-                <div className="space-y-3">
-                  <a
-                    href="tel:+919876543210"
-                    className="flex items-center gap-3 bg-green-50 hover:bg-green-100 p-4 rounded-xl transition-colors group"
-                  >
-                    <Phone className="w-5 h-5 text-green-600 group-hover:scale-110 transition-transform" />
-                    <span className="font-medium text-gray-800">Call Now</span>
-                  </a>
-                  <a
-                    href="mailto:info@rohokalefarm.com"
-                    className="flex items-center gap-3 bg-blue-50 hover:bg-blue-100 p-4 rounded-xl transition-colors group"
-                  >
-                    <Mail className="w-5 h-5 text-blue-600 group-hover:scale-110 transition-transform" />
-                    <span className="font-medium text-gray-800">Send Email</span>
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -282,51 +281,128 @@ const Contact: React.FC = () => {
           </div>
         </div>
 
-        {/* Google Maps */}
+        {/* Professional Farm Locations Section */}
         <div className="mt-20">
-          <div className="text-center mb-8">
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">Visit Our Farm</h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Experience organic farming firsthand. Our farm is open for visits by appointment. 
-              See our modern irrigation systems and quality produce in action.
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
+              <Navigation className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-4xl font-bold text-gray-800 mb-4">
+              Visit Our <span className="text-green-600">Farm Locations</span>
+            </h3>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              Experience organic farming firsthand at our multiple locations. Schedule a visit to see our modern practices in action.
             </p>
           </div>
           
-          <div className="bg-white rounded-3xl overflow-hidden shadow-xl border border-gray-100">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30168.32925282504!2d74.550333!3d19.061928!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcc9fa343c85db%3A0xd69c2b5aeb588e15!2sRohokale%20Farm!5e0!3m2!1sen!2sus!4v1758230308221!5m2!1sen!2sus"
-              width="100%"
-              height="450"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Rohokale Farm Location"
-              className="w-full"
-            ></iframe>
+          {/* Side by Side Farm Maps */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {farmLocations.map((farm, index) => (
+              <div key={index} className="bg-white rounded-2xl overflow-hidden shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300">
+                {/* Farm Header */}
+                <div className="bg-gradient-to-r from-green-50 to-green-100 p-6 border-b border-green-100">
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h4 className="text-xl font-bold text-gray-800 mb-2">{farm.name}</h4>
+                      <p className="text-sm text-gray-600 flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-green-600 flex-shrink-0" />
+                        {farm.address}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Farm Features */}
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {farm.features.map((feature, featureIndex) => (
+                      <span 
+                        key={featureIndex}
+                        className="px-3 py-1 bg-white text-green-700 text-xs font-medium rounded-full border border-green-200"
+                      >
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Map Container */}
+                <div className="relative h-64 bg-gray-100">
+                  <iframe
+                    src={farm.mapSrc}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={`${farm.name} Location`}
+                    className="w-full h-full"
+                  ></iframe>
+                </div>
+
+                {/* Farm Details */}
+                <div className="p-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <div>
+                      <h5 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                        <Clock className="w-4 h-4 text-green-600" />
+                        Visit Hours
+                      </h5>
+                      <p className="text-gray-600">Mon-Sat: 9 AM - 4 PM</p>
+                      <p className="text-gray-600">Duration: 45-60 mins</p>
+                    </div>
+                    <div>
+                      <h5 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                        <Navigation className="w-4 h-4 text-green-600" />
+                        Coordinates
+                      </h5>
+                      <p className="text-gray-600 font-mono text-xs">{farm.coordinates}</p>
+                      <button className="text-green-600 hover:text-green-700 text-xs font-medium mt-1 hover:underline">
+                        Get Directions →
+                      </button>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-4 pt-4 border-t border-gray-100">
+                    <p className="text-sm text-gray-600">
+                      <strong className="text-gray-800">Note:</strong> Please call ahead to schedule your visit. 
+                      Free parking available on-site.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Additional Visit Information */}
+          <div className="mt-12 bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            <div className="text-center mb-6">
+              <h4 className="text-2xl font-bold text-gray-800 mb-2">Plan Your Farm Visit</h4>
+              <p className="text-gray-600">What to expect during your visit to Rohokale Farm</p>
+            </div>
             
-            <div className="p-8 bg-gradient-to-r from-green-50 to-blue-50">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    <MapPin className="w-5 h-5 text-green-600" />
-                    Directions
-                  </h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    Located on Sarola Advai - Bhoyare Pathar Road, our farm is easily accessible by car. 
-                    Free parking available on-site. Please call ahead to schedule your visit.
-                  </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-green-100 rounded-xl mx-auto mb-3 flex items-center justify-center">
+                  <Users className="w-6 h-6 text-green-600" />
                 </div>
-                <div>
-                  <h4 className="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-green-600" />
-                    Visit Information
-                  </h4>
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    Farm tours available Monday-Saturday, 9 AM - 4 PM. Duration: 45-60 minutes. 
-                    Learn about our organic practices, see our irrigation systems, and taste fresh produce.
-                  </p>
+                <h5 className="font-semibold text-gray-800 mb-2">Guided Tour</h5>
+                <p className="text-sm text-gray-600">Expert-led tours explaining our organic farming methods and sustainable practices</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-12 h-12 bg-blue-100 rounded-xl mx-auto mb-3 flex items-center justify-center">
+                  <Package className="w-6 h-6 text-blue-600" />
                 </div>
+                <h5 className="font-semibold text-gray-800 mb-2">Fresh Produce</h5>
+                <p className="text-sm text-gray-600">Taste and purchase fresh, organic produce directly from our farms</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="w-12 h-12 bg-purple-100 rounded-xl mx-auto mb-3 flex items-center justify-center">
+                  <MessageCircle className="w-6 h-6 text-purple-600" />
+                </div>
+                <h5 className="font-semibold text-gray-800 mb-2">Educational Experience</h5>
+                <p className="text-sm text-gray-600">Learn about modern irrigation, soil health, and organic certification processes</p>
               </div>
             </div>
           </div>

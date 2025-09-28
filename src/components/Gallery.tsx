@@ -19,7 +19,7 @@ const Gallery: React.FC = () => {
       title: 'Drip Irrigation System'
     },
     {
-      src: '/images/image.png',
+      src: '/images/mango3.png',
       alt: 'Organic Keshar mangoes on trees',
       category: 'Fruits',
       title: 'Organic Keshar Mangoes'
@@ -37,35 +37,23 @@ const Gallery: React.FC = () => {
       title: 'Fresh Green Onions'
     },
     {
-      src: '/images/brinjal.jpg',
-      alt: 'Organic brinjal cultivation',
-      category: 'Vegetables',
-      title: 'Organic Brinjal'
-    },
-    {
-      src: '/images/seeds.jpg',
+      src: '/images/onion-seeds.png',
       alt: 'Premium quality onion seeds',
       category: 'Seeds',
       title: 'Premium Seeds'
     },
     {
-      src: '/images/jowar.jpg',
+      src: '/images/jowar.png',
       alt: 'Traditional jowar (sorghum) cultivation',
       category: 'Grains',
       title: 'Jowar Cultivation'
     },
     {
-      src: '/images/bajra.jpg',
+      src: '/images/bajara.png',
       alt: 'Bajra (pearl millet) farming',
       category: 'Grains',
       title: 'Bajra Farming'
     },
-    {
-      src: '/images/moong.jpg',
-      alt: 'Green gram (moong) harvest',
-      category: 'Grains',
-      title: 'Green Gram Harvest'
-    }
   ];
 
   const categories = [
@@ -160,12 +148,12 @@ const Gallery: React.FC = () => {
               <div className="text-gray-600 font-medium">Total Photos</div>
             </div>
             <div>
-              <div className="text-3xl font-bold text-green-600 mb-1">55+</div>
+              <div className="text-3xl font-bold text-green-600 mb-1">100+</div>
               <div className="text-gray-600 font-medium">Tonnes/Year</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-green-600 mb-1">100%</div>
-              <div className="text-gray-600 font-medium">Organic</div>
+              <div className="text-gray-600 font-medium">Organic Mangoes</div>
             </div>
             <div>
               <div className="text-3xl font-bold text-green-600 mb-1">Modern</div>

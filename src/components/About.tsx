@@ -1,5 +1,6 @@
 import React from 'react';
 import { Heart, Globe, TrendingUp, Sprout, Award, Shield, Target, BarChart3, Leaf } from 'lucide-react';
+import { PiFarmLight } from "react-icons/pi";
 
 const About: React.FC = () => {
   const features = [
@@ -63,7 +64,7 @@ const About: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
           <div className="inline-flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-green-100 to-green-200 rounded-full mb-4 sm:mb-6">
-            <Sprout className="w-6 h-6 sm:w-8 sm:h-8 text-green-600" />
+            <PiFarmLight className="w-10 h-10 sm:w-12 sm:h-12 text-green-600" />
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold  text-gray-800 mb-4 sm:mb-6">
             About <span className="text-green-600">Rohokale Farm</span>

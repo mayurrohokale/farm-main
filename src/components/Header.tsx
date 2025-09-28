@@ -41,7 +41,7 @@ const Header: React.FC = () => {
   return (
     <>
       {/* Main Header */}
-      <header className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      <header className={`fixed top-0 logo-title w-full z-50 transition-all duration-300 ${
         isScrolled 
           ? 'bg-white/90 backdrop-blur-lg shadow-lg' 
           : 'bg-white/95 backdrop-blur-sm shadow-sm'
@@ -49,21 +49,21 @@ const Header: React.FC = () => {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 lg:py-4">
             {/* Logo */}
-            <div className="flex items-center space-x-2 lg:space-x-3 group cursor-pointer">
+            <div className="flex items-center group cursor-pointer">
                 <img
-                  src='images/logo4.png'
+                  src='images/rf-logo.png'
                   alt="Rohokale Farm Logo"
-                  className="w-12 h-12 lg:w-14 lg:h-14 object-contain"
+                  className="w-12 h-12 lg:w-16 lg:h-16 object-contain"
                 />
                 {/* <LeafIcon className="w-8 h-8 lg:w-10 lg:h-10 text-green-600 group-hover:text-green-700 transition-colors" /> */}
 
               
               <div>
-                <h1 className="text-lg sm:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
+                <h1 className="text-lg logo-title  sm:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
                   Rohokale Farm
                 </h1>
-                <p className="text-xs lg:text-sm text-green-600 font-medium hidden sm:block">
-                  Modern Organic Agriculture
+                <p className="text-[9px] logo-title lg:text-xs text-green-600 font-medium ">
+                 Generations of Quality
                 </p>
               </div>
             </div>

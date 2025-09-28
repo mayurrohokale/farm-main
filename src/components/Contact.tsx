@@ -35,7 +35,7 @@ const Contact: React.FC = () => {
     {
       icon: <Phone className="w-6 h-6 text-green-600" />,
       title: 'Phone Numbers',
-      details: ['+91 98765 43210', '+91 87654 32109'],
+      details: [ '+91 9284659472','+91 8080272025'],
       subtitle: 'Available during business hours'
     },
     {
@@ -83,15 +83,16 @@ const Contact: React.FC = () => {
     {
       name: 'Farm 1: Sarola Advai',
       address: 'Bhoyare Pathar Rd, Bhoyare Pathar, Daithane Gunjal, Maharashtra 414103',
-      mapSrc: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30168.32925282504!2d74.550333!3d19.061928!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcc9fa343c85db%3A0xd69c2b5aeb588e15!2sRohokale%20Farm!5e0!3m2!1sen!2sus!4v1758230308221!5m2!1sen!2sus',
-      features: ['Organic Vegetables', 'Modern Irrigation', 'Visitor Center'],
+      // mapSrc: 'https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d30168.32925282504!2d74.550333!3d19.061928!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcc9fa343c85db%3A0xd69c2b5aeb588e15!2sRohokale%20Farm!5e0!3m2!1sen!2sus!4v1758230308221!5m2!1sen!2sus',
+      mapSrc: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d910.843916131635!2d74.5492356476885!3d19.06192964998887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bdcc9fa343c85db%3A0xd69c2b5aeb588e15!2sRohokale%20Farm!5e1!3m2!1sen!2sin!4v1759071598187!5m2!1sen!2sin',
+      features: ['Premium Onions', 'Modern Irrigation', 'Visitor Center'],
       coordinates: '19.061928, 74.550333'
     },
     {
       name: 'Farm 2: Talpimpri',
       address: 'Near M55C+5HQ Talpimpri, Sambhajinagar, Maharashtra',
       mapSrc: 'https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1168.938980125049!2d75.17076141777541!3d19.658015632004204!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMTnCsDM5JzI4LjciTiA3NcKwMTAnMTcuMyJF!5e1!3m2!1sen!2sin!4v1759053703222!5m2!1sen!2sin',
-      features: ['Fruit Orchards', 'Processing Unit', 'Warehouse'],
+      features: ['Premium Sweet Limes', 'Organic Mangoes', 'Modern Agriculture'],
       coordinates: '19.658016, 75.170761'
     }
   ];
@@ -229,7 +230,7 @@ const Contact: React.FC = () => {
                     >
                       <option value="">Select inquiry type</option>
                       <option value="product-inquiry">Product Inquiry</option>
-                      <option value="bulk-order">Bulk Order (10kg+)</option>
+                      <option value="bulk-order">Bulk Order (500kg+)</option>
                       <option value="custom-order">Custom Order</option>
                       <option value="wholesale">Wholesale Partnership</option>
                       <option value="farm-visit">Farm Visit Request</option>

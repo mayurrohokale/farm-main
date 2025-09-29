@@ -20,13 +20,14 @@ const Header: React.FC = () => {
   const navItems = [
     { name: 'Home', href: '#home' },
     { name: 'About', href: '#about' },
-    { 
-      name: 'Products', 
+    {
+      name: 'Products',
       href: '#products',
       dropdown: [
         { name: 'Premium Onions', href: '#products' },
+        { name: 'Sweet Limes', href: '#products' },
         { name: 'Organic Mangoes', href: '#products' },
-        { name: 'Fresh Vegetables', href: '#products' },
+        // { name: 'Fresh Vegetables', href: '#products' },
         { name: 'Grains & Millets', href: '#products' },
         { name: 'Seeds & Crops', href: '#products' }
       ]
@@ -42,29 +43,28 @@ const Header: React.FC = () => {
   return (
     <>
       {/* Main Header */}
-      <header className={`fixed top-0 logo-title w-full z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-white/90 backdrop-blur-xl shadow-lg' 
+      <header className={`fixed top-0 logo-title w-full z-50 transition-all duration-300 ${isScrolled
+          ? 'bg-white/90 backdrop-blur-xl shadow-lg'
           : 'bg-white/95 backdrop-blur-sm shadow-sm'
-      }`}>
+        }`}>
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-3 lg:py-4">
             {/* Logo */}
             <div className="flex items-center group cursor-pointer">
-                <img
-                  src='images/rf-logo.png'
-                  alt="Rohokale Farm Logo"
-                  className="w-12 h-12 lg:w-16 lg:h-16 object-contain"
-                />
-                {/* <LeafIcon className="w-8 h-8 lg:w-10 lg:h-10 text-green-600 group-hover:text-green-700 transition-colors" /> */}
+              <img
+                src='images/rf-logo.png'
+                alt="Rohokale Farm Logo"
+                className="w-12 h-12 lg:w-16 lg:h-16 object-contain"
+              />
+              {/* <LeafIcon className="w-8 h-8 lg:w-10 lg:h-10 text-green-600 group-hover:text-green-700 transition-colors" /> */}
 
-              
+
               <div>
                 <h1 className="text-lg logo-title  sm:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
                   Rohokale Farm
                 </h1>
                 <p className="text-[9px] logo-title lg:text-xs text-green-600 font-medium ">
-                 Generations of Quality
+                  Generations of Quality
                 </p>
               </div>
               <div className="relative group ml-2">
@@ -77,9 +77,9 @@ const Header: React.FC = () => {
                 >
                   Aplpha Release: under development
                 </span>
+              </div>
             </div>
-            </div>
-            
+
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-8">
               {navItems.map((item) => (
@@ -92,18 +92,16 @@ const Header: React.FC = () => {
                         onMouseLeave={() => setActiveDropdown(null)}
                       >
                         <span>{item.name}</span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
-                          activeDropdown === item.name ? 'rotate-180' : ''
-                        }`} />
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''
+                          }`} />
                       </button>
-                      
+
                       {/* Dropdown Menu */}
-                      <div 
-                        className={`absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 transform ${
-                          activeDropdown === item.name 
-                            ? 'opacity-100 translate-y-0 visible' 
+                      <div
+                        className={`absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 transform ${activeDropdown === item.name
+                            ? 'opacity-100 translate-y-0 visible'
                             : 'opacity-0 -translate-y-2 invisible'
-                        }`}
+                          }`}
                         onMouseEnter={() => setActiveDropdown(item.name)}
                         onMouseLeave={() => setActiveDropdown(null)}
                       >
@@ -128,7 +126,7 @@ const Header: React.FC = () => {
                   )}
                 </div>
               ))}
-              
+
               {/* CTA Button */}
               <a
                 href="#contact"
@@ -150,9 +148,8 @@ const Header: React.FC = () => {
           </div>
 
           {/* Mobile Navigation */}
-          <div className={`lg:hidden transition-all duration-300 overflow-hidden ${
-            isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-          }`}>
+          <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+            }`}>
             <div className="py-4 space-y-2 bg-white/95 backdrop-blur-sm rounded-xl border border-gray-100 shadow-lg mb-4">
               {navItems.map((item) => (
                 <div key={item.name}>
@@ -163,11 +160,10 @@ const Header: React.FC = () => {
                         className="flex items-center justify-between w-full px-4 py-3 text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium transition-colors rounded-lg mx-2"
                       >
                         <span>{item.name}</span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${
-                          activeDropdown === item.name ? 'rotate-180' : ''
-                        }`} />
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''
+                          }`} />
                       </button>
-                      
+
                       {activeDropdown === item.name && (
                         <div className="pl-6 pr-2 py-2 space-y-1">
                           {item.dropdown.map((dropdownItem) => (
@@ -194,7 +190,7 @@ const Header: React.FC = () => {
                   )}
                 </div>
               ))}
-              
+
               {/* Mobile CTA */}
               <div className="px-2 pt-2">
                 <a

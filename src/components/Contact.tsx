@@ -35,13 +35,13 @@ const Contact: React.FC = () => {
     {
       icon: <Phone className="w-6 h-6 text-green-600" />,
       title: 'Phone Numbers',
-      details: [ '+91 9284659472','+91 8080272025'],
+      details: [ '+91 9284659472','+91 7020595294'],
       subtitle: 'Available during business hours'
     },
     {
       icon: <Mail className="w-6 h-6 text-green-600" />,
       title: 'Email Addresses',
-      details: ['info@rohokalefarm.com', 'orders@rohokalefarm.com'],
+      details: ['info@rohokalefarm.com'],
       subtitle: 'We respond within 24 hours'
     },
     {

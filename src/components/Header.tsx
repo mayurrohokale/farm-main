@@ -54,7 +54,7 @@ const Header: React.FC = () => {
       >
         <nav className={`container-site flex items-center justify-between transition-all duration-500 ${solid ? 'h-16 sm:h-[72px]' : 'h-20 sm:h-24'}`}>
           <a href="#home" aria-label="Rohokale Farm — home" onClick={() => setOpen(false)} className="relative z-10">
-            <Logo tone={solid ? 'dark' : 'light'} animated compact={solid} />
+            <Logo tone={solid ? 'dark' : 'light'} compact={solid} />
           </a>
 
           <ul className="hidden items-center gap-1 lg:flex">

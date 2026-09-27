@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import Picture from './ui/Picture';
-import { LogoBadge } from './ui/Logo';
 import { useCountUp, useInView } from '../lib/motion';
 
 const SLIDES = [
@@ -86,15 +85,6 @@ const Hero: React.FC = () => {
         ))}
         <div className="absolute inset-0 bg-gradient-to-b from-forest/60 via-forest/25 to-forest/95" />
         <div className="absolute inset-0 bg-gradient-to-r from-forest/70 via-forest/20 to-transparent" />
-      </div>
-
-      {/* Brand badge — the sun rises on load, then the badge gently floats */}
-      <div
-        className={`absolute right-4 top-28 hidden transition-all delay-700 duration-1000 sm:block lg:right-12 lg:top-36 ${
-          loaded ? 'badge-rise rotate-0 scale-100 opacity-100' : '-rotate-12 scale-50 opacity-0'
-        }`}
-      >
-        <LogoBadge className="h-36 w-36 animate-floaty drop-shadow-[0_12px_40px_rgba(0,0,0,.35)] lg:h-44 lg:w-44" />
       </div>
 
       {/* Copy */}

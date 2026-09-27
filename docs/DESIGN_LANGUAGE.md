@@ -26,15 +26,7 @@ This file records the brand audit of the previous site and the new design system
 The whole palette comes from the farm's own photographs: deep field greens, red-onion rose, Keshar-mango saffron, turned-earth brown and a warm cream sky.
 
 ### Logo
-`public/brand/logo-mark.svg` · `public/brand/logo-horizontal.svg` · `public/brand/logo-badge.svg` · `public/favicon.svg` · React: `src/components/ui/Logo.tsx`
-
-- **RF monogram:** outlined (line-drawn) **R** and **F**. The F's middle arm is a two-tone leaf, and a small leaf sprouts from its top. It evolves the farm's original "rf" mark into a cleaner, more premium line style.
-- **Wordmark:** `ROHOKALE` in Manrope ExtraBold with 0.14em tracking, over `FARM` in Manrope Bold with 0.62em tracking. Used next to the monogram in the header and footer.
-- **Vintage badge:** a keshar sun rising over furrowed onion fields and green hills, with a `ROHOKALE FARM` banner in Fraunces across the middle, `MAHARASHTRA · INDIA` below, and `GENERATIONS OF QUALITY` on the bottom arc. Used in the hero and footer, and suited to packaging, crates and stamps.
-- **Colour:** the letter lines are `#1F6B35` on light backgrounds and cream on dark ones. The leaf is two-tone (`#6FAE4A` / `#2F7D3A`).
-- **Favicon:** a cream RF on a green circle, with thicker lines so it stays legible at 16–32 px.
-- **Animated:** the letter outlines draw themselves in, then the leaf and sprout grow. The leaf sways on hover. In the hero, the badge's sun rises on load.
-- **Minimum size:** 24 px tall for the monogram (use the favicon version below that) and 96 px for the badge.
+No graphic logo: the farm name **Rohokale Farm** is set simply in Manrope ExtraBold (`src/components/ui/Logo.tsx`). It's forest green on light backgrounds and cream on dark ones or over photos. The favicon is a bold "R" on forest green.
 
 ### Colour tokens (`tailwind.config.js`)
 
@@ -69,7 +61,6 @@ Both fonts are self-hosted from `/public/fonts`, so the site makes no Google Fon
 ### Motion (`src/lib/motion.ts`, `src/index.css`)
 | Effect | Where |
 | --- | --- |
-| Logo draw-in and leaf wiggle | Header |
 | Word-by-word headline reveal | Hero, every section heading, footer |
 | Ken Burns slideshow with progress-bar pills, swipe support and pause | Hero |
 | Count-up stats | Hero stats strip |

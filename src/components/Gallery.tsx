@@ -4,6 +4,7 @@ import SectionHeading from './ui/SectionHeading';
 import Picture from './ui/Picture';
 
 const IMAGES = [
+  { base: '/img/morning-fields', title: 'Morning over the onion rows', category: 'Fields', tall: true },
   { base: '/img/sunset-field', title: 'Golden hour over the crop', category: 'Fields', tall: true },
   { base: '/img/onion-seeds-hand', title: 'Onion seed, ready for sowing', category: 'Seeds', tall: true },
   { base: '/img/drip-lines', title: 'Drip lines at sunrise', category: 'Technology', tall: true },

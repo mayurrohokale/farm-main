@@ -4,13 +4,14 @@ import Picture from './ui/Picture';
 import { useCountUp, useInView } from '../lib/motion';
 
 const SLIDES = [
-  { base: '/img/onion_field', alt: 'Green onion fields at Rohokale Farm', caption: 'Onion fields', place: 'Sarola Advai' },
-  { base: '/img/mango', alt: 'A crate of organic Keshar mangoes', caption: 'Organic Keshar mangoes', place: 'Summer harvest' },
-  { base: '/img/1682310464179', alt: 'Fields at dusk with wind turbines on the hills', caption: 'Evening over the fields', place: 'Daithane Gunjal' },
-  { base: '/img/onion3', alt: 'A basket of freshly harvested red onions', caption: 'Fresh harvest', place: '55+ tonnes a year' },
-  { base: '/img/lime', alt: 'Sweet lime trees heavy with fruit', caption: 'Sweet lime orchard', place: '50+ tonnes a year' },
+  { base: '/img/drip-lines', alt: 'Long rows of drip lines across freshly prepared soil at sunrise', caption: 'Drip lines laid at sunrise', place: 'Ready for the new crop', pos: '50% 50%' },
+  { base: '/img/morning-fields', alt: 'Morning over young onion rows, with mango trees and a hill beyond', caption: 'Morning on the farm', place: 'Onion nursery & mango trees', pos: '50% 62%' },
   { base: '/img/sunset-field', alt: 'Sun setting behind a tree over a lush green field', caption: 'Golden hour on the farm', place: 'Evening light', pos: '50% 28%' },
-  { base: '/img/drip-lines', alt: 'Long rows of drip lines across freshly prepared soil at sunrise', caption: 'Drip lines laid for the new crop', place: 'Every row irrigated', pos: '50% 45%' },
+  { base: '/img/green_onion', alt: 'Onion crop with hills and wind turbines in the distance', caption: 'Onion fields', place: 'Daithane Gunjal', pos: '50% 40%' },
+  { base: '/img/onion3', alt: 'A basket of freshly harvested red onions', caption: 'Fresh onion harvest', place: '55+ tonnes a year', pos: '50% 50%' },
+  { base: '/img/mango', alt: 'A crate of organic Keshar mangoes', caption: 'Organic Keshar mangoes', place: 'Summer harvest', pos: '50% 50%' },
+  { base: '/img/wheat-field', alt: 'Wheat field turning golden under a clear sky', caption: 'Wheat turning gold', place: 'Rabi season', pos: '50% 42%' },
+  { base: '/img/lime', alt: 'Sweet lime trees heavy with fruit', caption: 'Sweet lime orchard', place: '50+ tonnes a year', pos: '50% 50%' },
 ];
 
 const DURATION = 6500;
@@ -81,12 +82,12 @@ const Hero: React.FC = () => {
               alt={s.alt}
               loading={i === 0 ? 'eager' : 'lazy'}
               className={`h-full w-full object-cover ${i === current ? 'animate-kenburns' : ''}`}
-              style={{ objectPosition: 'pos' in s ? s.pos : undefined }}
+              style={{ objectPosition: s.pos }}
             />
           </div>
         ))}
         <div className="absolute inset-0 bg-gradient-to-b from-forest/60 via-forest/25 to-forest/95" />
-        <div className="absolute inset-0 bg-gradient-to-r from-forest/70 via-forest/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-r from-forest/80 via-forest/35 to-forest/5 max-lg:from-forest/60 max-lg:via-forest/45 max-lg:to-forest/35" />
       </div>
 
       {/* Copy */}

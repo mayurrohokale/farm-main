@@ -1,214 +1,159 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, ChevronDown } from 'lucide-react';
-import { TbAlpha } from "react-icons/tb";
+import React, { useEffect, useState } from 'react';
+import { ArrowUpRight, Phone } from 'lucide-react';
+import Logo from './ui/Logo';
+import { SITE, telHref } from '../lib/site';
+import { useScrollProgress } from '../lib/motion';
 
+const NAV = [
+  { name: 'Home', href: '#home' },
+  { name: 'Our Story', href: '#about' },
+  { name: 'Produce', href: '#products' },
+  { name: 'Gallery', href: '#gallery' },
+  { name: 'Contact', href: '#contact' },
+];
 
 const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState('#home');
+  const progress = useScrollProgress();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItems = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    {
-      name: 'Products',
-      href: '#products',
-      dropdown: [
-        { name: 'Premium Onions', href: '#products' },
-        { name: 'Sweet Limes', href: '#products' },
-        { name: 'Organic Mangoes', href: '#products' },
-        // { name: 'Fresh Vegetables', href: '#products' },
-        { name: 'Grains & Millets', href: '#products' },
-        { name: 'Seeds & Crops', href: '#products' }
-      ]
-    },
-    { name: 'Gallery', href: '#gallery' },
-    { name: 'Contact', href: '#contact' },
-  ];
+  // Highlight the nav item for the section currently in view.
+  useEffect(() => {
+    const sections = NAV.map((n) => document.querySelector(n.href)).filter(Boolean) as Element[];
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(`#${e.target.id}`)),
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+    sections.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, []);
 
-  const handleDropdownToggle = (itemName: string) => {
-    setActiveDropdown(activeDropdown === itemName ? null : itemName);
-  };
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setOpen(false);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  const solid = scrolled || open;
 
   return (
-    <>
-      {/* Main Header */}
-      <header className={`fixed top-0 logo-title w-full z-50 transition-all duration-300 ${isScrolled
-          ? 'bg-white/90 backdrop-blur-xl shadow-lg'
-          : 'bg-white/95 backdrop-blur-sm shadow-sm'
-        }`}>
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-3 lg:py-4">
-            {/* Logo */}
-            <div className="flex items-center group cursor-pointer">
-              <img
-                src='images/rf-logo.png'
-                alt="Rohokale Farm Logo"
-                className="w-12 h-12 lg:w-16 lg:h-16 object-contain"
-              />
-              {/* <LeafIcon className="w-8 h-8 lg:w-10 lg:h-10 text-green-600 group-hover:text-green-700 transition-colors" /> */}
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div
+        className={`transition-all duration-500 ${
+          solid ? 'bg-cream-100/85 shadow-[0_1px_0_rgba(20,48,31,.08)] backdrop-blur-xl' : 'bg-gradient-to-b from-black/45 to-transparent'
+        }`}
+      >
+        <nav className={`container-site flex items-center justify-between transition-all duration-500 ${solid ? 'h-16 sm:h-[72px]' : 'h-20 sm:h-24'}`}>
+          <a href="#home" aria-label="Rohokale Farm — home" onClick={() => setOpen(false)} className="relative z-10">
+            <Logo tone={solid ? 'dark' : 'light'} animated compact={solid} />
+          </a>
 
-
-              <div>
-                <h1 className="text-lg logo-title  sm:text-xl lg:text-2xl font-bold text-gray-800 group-hover:text-green-600 transition-colors">
-                  Rohokale Farm
-                </h1>
-                <p className="text-[9px] logo-title lg:text-xs text-green-600 font-medium ">
-                  Generations of Quality
-                </p>
-              </div>
-              <div className="relative group ml-2">
-                <div className="text-gray-500 px-2 text-lg lg:text-xl">
-                  <TbAlpha aria-hidden="true" />
-                </div>
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs bg-black text-white px-2 py-1 rounded whitespace-nowrap shadow-lg"
-                >
-                  Aplpha Release: under development
-                </span>
-              </div>
-            </div>
-
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <div key={item.name} className="relative group">
-                  {item.dropdown ? (
-                    <div className="relative">
-                      <button
-                        className="flex items-center space-x-1 text-gray-700 hover:text-green-600 font-semibold transition-all duration-200 py-2 px-4 rounded-lg hover:bg-green-50"
-                        onMouseEnter={() => setActiveDropdown(item.name)}
-                        onMouseLeave={() => setActiveDropdown(null)}
-                      >
-                        <span>{item.name}</span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''
-                          }`} />
-                      </button>
-
-                      {/* Dropdown Menu */}
-                      <div
-                        className={`absolute top-full left-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 transition-all duration-200 transform ${activeDropdown === item.name
-                            ? 'opacity-100 translate-y-0 visible'
-                            : 'opacity-0 -translate-y-2 invisible'
-                          }`}
-                        onMouseEnter={() => setActiveDropdown(item.name)}
-                        onMouseLeave={() => setActiveDropdown(null)}
-                      >
-                        {item.dropdown.map((dropdownItem) => (
-                          <a
-                            key={dropdownItem.name}
-                            href={dropdownItem.href}
-                            className="block px-4 py-3 text-gray-700 hover:text-green-600 hover:bg-green-50 transition-colors font-medium text-sm"
-                          >
-                            {dropdownItem.name}
-                          </a>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    <a
-                      href={item.href}
-                      className="text-gray-700 hover:text-green-600 font-semibold transition-all duration-200 py-2 px-4 rounded-lg hover:bg-green-50"
-                    >
-                      {item.name}
-                    </a>
-                  )}
-                </div>
-              ))}
-
-              {/* CTA Button */}
-              <a
-                href="#contact"
-                className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-              >
-                Get Quote
-              </a>
-            </div>
-
-            {/* Mobile menu button */}
-            <div className="lg:hidden">
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors"
-              >
-                {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Navigation */}
-          <div className={`lg:hidden transition-all duration-300 overflow-hidden ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
-            }`}>
-            <div className="py-4 space-y-2 bg-white/95 backdrop-blur-sm rounded-xl border border-gray-100 shadow-lg mb-4">
-              {navItems.map((item) => (
-                <div key={item.name}>
-                  {item.dropdown ? (
-                    <div>
-                      <button
-                        onClick={() => handleDropdownToggle(item.name)}
-                        className="flex items-center justify-between w-full px-4 py-3 text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium transition-colors rounded-lg mx-2"
-                      >
-                        <span>{item.name}</span>
-                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === item.name ? 'rotate-180' : ''
-                          }`} />
-                      </button>
-
-                      {activeDropdown === item.name && (
-                        <div className="pl-6 pr-2 py-2 space-y-1">
-                          {item.dropdown.map((dropdownItem) => (
-                            <a
-                              key={dropdownItem.name}
-                              href={dropdownItem.href}
-                              className="block px-4 py-2 text-gray-600 hover:text-green-600 hover:bg-green-50 transition-colors rounded-lg text-sm"
-                              onClick={() => setIsMenuOpen(false)}
-                            >
-                              {dropdownItem.name}
-                            </a>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  ) : (
-                    <a
-                      href={item.href}
-                      className="block px-4 py-3 text-gray-700 hover:text-green-600 hover:bg-green-50 font-medium transition-colors rounded-lg mx-2"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      {item.name}
-                    </a>
-                  )}
-                </div>
-              ))}
-
-              {/* Mobile CTA */}
-              <div className="px-2 pt-2">
+          <ul className="hidden items-center gap-1 lg:flex">
+            {NAV.map((item) => (
+              <li key={item.href}>
                 <a
-                  href="#contact"
-                  className="block bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors text-center"
-                  onClick={() => setIsMenuOpen(false)}
+                  href={item.href}
+                  aria-current={active === item.href}
+                  className={`link-draw mx-3 py-1 text-[15px] font-semibold transition-colors ${
+                    solid ? 'text-forest/80 hover:text-forest' : 'text-cream-100/85 hover:text-white'
+                  } ${active === item.href ? (solid ? '!text-forest' : '!text-white') : ''}`}
                 >
-                  Get Quote
+                  {item.name}
                 </a>
-              </div>
-            </div>
+              </li>
+            ))}
+          </ul>
+
+          <div className="flex items-center gap-2">
+            <a
+              href={telHref(SITE.phones[0])}
+              className={`hidden h-11 w-11 items-center justify-center rounded-full border transition-colors md:inline-flex ${
+                solid ? 'border-forest/15 text-forest hover:bg-forest hover:text-cream-100' : 'border-white/30 text-white hover:bg-white/15'
+              }`}
+              aria-label={`Call ${SITE.phones[0]}`}
+            >
+              <Phone className="h-4 w-4" />
+            </a>
+            <a href="#contact" className="btn-primary hidden !py-3 sm:inline-flex">
+              Get a Quote <ArrowUpRight className="h-4 w-4" />
+            </a>
+
+            {/* animated hamburger */}
+            <button
+              onClick={() => setOpen((o) => !o)}
+              className={`relative z-10 flex h-11 w-11 items-center justify-center rounded-full lg:hidden ${
+                solid ? 'bg-forest text-cream-100' : 'bg-white/15 text-white backdrop-blur'
+              }`}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+            >
+              <span className="relative block h-3 w-5">
+                <span className={`absolute left-0 h-0.5 w-5 rounded bg-current transition-all duration-300 ${open ? 'top-1.5 rotate-45' : 'top-0'}`} />
+                <span className={`absolute left-0 top-1.5 h-0.5 rounded bg-current transition-all duration-300 ${open ? 'w-0 opacity-0' : 'w-3.5'}`} />
+                <span className={`absolute left-0 h-0.5 w-5 rounded bg-current transition-all duration-300 ${open ? 'top-1.5 -rotate-45' : 'top-3'}`} />
+              </span>
+            </button>
           </div>
         </nav>
-      </header>
+        {/* scroll progress */}
+        <div className="h-[2px] origin-left bg-gradient-to-r from-leaf-500 via-keshar-500 to-onion-500" style={{ transform: `scaleX(${progress})` }} />
+      </div>
 
-      {/* Spacer to prevent content overlap */}
-      <div className="h-12 lg:h-18"></div>
-    </>
+      {/* Mobile menu */}
+      <div
+        className={`fixed inset-0 -z-10 bg-cream-100 transition-[clip-path] duration-700 ease-[cubic-bezier(.7,0,.2,1)] lg:hidden ${
+          open ? '[clip-path:circle(150%_at_100%_0)]' : 'pointer-events-none [clip-path:circle(0%_at_100%_0)]'
+        }`}
+      >
+        <div className="container-site flex h-full flex-col justify-between pb-10 pt-28">
+          <ul className="space-y-1">
+            {NAV.map((item, i) => (
+              <li
+                key={item.href}
+                className="overflow-hidden"
+              >
+                <a
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={`flex items-baseline gap-4 py-2 font-display text-[2.6rem] font-medium leading-tight text-forest transition-all duration-700 ${
+                    open ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
+                  }`}
+                  style={{ transitionDelay: open ? `${150 + i * 70}ms` : '0ms' }}
+                >
+                  <span className="font-sans text-xs font-bold text-keshar-600">0{i + 1}</span>
+                  {item.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <div
+            className={`space-y-4 transition-all duration-700 ${open ? 'translate-y-0 opacity-100' : 'translate-y-6 opacity-0'}`}
+            style={{ transitionDelay: open ? '550ms' : '0ms' }}
+          >
+            <a href="#contact" onClick={() => setOpen(false)} className="btn-dark w-full">
+              Get a Quote <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm font-semibold text-forest/70">
+              {SITE.phones.map((p) => (
+                <a key={p} href={telHref(p)}>
+                  {p}
+                </a>
+              ))}
+              <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
   );
 };
 

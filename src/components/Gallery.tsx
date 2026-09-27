@@ -1,284 +1,146 @@
-import React, { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Camera, ZoomIn, Grid3X3, Filter } from 'lucide-react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight, Maximize2, X } from 'lucide-react';
+import SectionHeading from './ui/SectionHeading';
+import Picture from './ui/Picture';
+
+const IMAGES = [
+  { base: '/img/onion_field', title: 'Onion fields in full growth', category: 'Fields', tall: true },
+  { base: '/img/mango', title: 'Organic Keshar mangoes', category: 'Harvest' },
+  { base: '/img/drip', title: 'Drip-irrigated rows', category: 'Technology' },
+  { base: '/img/onion3', title: 'Freshly harvested onions', category: 'Harvest', tall: true },
+  { base: '/img/1682310464179', title: 'Evening over the fields', category: 'Fields' },
+  { base: '/img/onion2', title: 'Onion storage & loading', category: 'Harvest' },
+  { base: '/img/green_onion', title: 'Young onion crop', category: 'Fields', tall: true },
+  { base: '/img/field', title: 'Preparing the land', category: 'Fields' },
+  { base: '/img/onion', title: 'Deep-red, firm onions', category: 'Harvest' },
+  { base: '/img/lime', title: 'Sweet lime (mosambi)', category: 'Harvest' },
+  { base: '/img/onion-seeds', title: 'Premium onion seed', category: 'Seeds' },
+  { base: '/img/jowar', title: 'Jowar (sorghum)', category: 'Seeds' },
+];
+
+const CATS = ['All', 'Fields', 'Harvest', 'Technology', 'Seeds'];
 
 const Gallery: React.FC = () => {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [cat, setCat] = useState('All');
+  const [open, setOpen] = useState<number | null>(null);
+  const touchX = useRef<number | null>(null);
+  const shown = cat === 'All' ? IMAGES : IMAGES.filter((i) => i.category === cat);
 
-  const images = [
-    {
-      src: '/images/onion2.jpg',
-      alt: 'Premium onion harvest - 55+ tonnes annual production',
-      category: 'Harvest',
-      title: 'Premium Onion Harvest'
-    },
-    {
-      src: '/images/drip.jpg',
-      alt: 'Advanced drip irrigation system in action',
-      category: 'Technology',
-      title: 'Drip Irrigation System'
-    },
-    {
-      src: '/images/mango3.png',
-      alt: 'Organic Keshar mangoes on trees',
-      category: 'Fruits',
-      title: 'Organic Keshar Mangoes'
-    },
-    {
-      src: '/images/field.jpg',
-      alt: 'Modern farm fields with advanced cultivation',
-      category: 'Farm',
-      title: 'Modern Farm Fields'
-    },
-    {
-      src: '/images/green_onion.jpg',
-      alt: 'Fresh green onions ready for harvest',
-      category: 'Harvest',
-      title: 'Fresh Green Onions'
-    },
-    {
-      src: '/images/onion-seeds.png',
-      alt: 'Premium quality onion seeds',
-      category: 'Seeds',
-      title: 'Premium Seeds'
-    },
-    {
-      src: '/images/jowar.png',
-      alt: 'Traditional jowar (sorghum) cultivation',
-      category: 'Grains',
-      title: 'Jowar Cultivation'
-    },
-    {
-      src: '/images/bajara.png',
-      alt: 'Bajra (pearl millet) farming',
-      category: 'Grains',
-      title: 'Bajra Farming'
-    },
-  ];
+  const step = useCallback((d: number) => setOpen((o) => (o === null ? o : (o + d + shown.length) % shown.length)), [shown.length]);
 
-  const categories = [
-    { id: 'all', name: 'All Photos', count: images.length },
-    { id: 'Harvest', name: 'Harvest', count: images.filter(img => img.category === 'Harvest').length },
-    { id: 'Technology', name: 'Technology', count: images.filter(img => img.category === 'Technology').length },
-    { id: 'Fruits', name: 'Fruits', count: images.filter(img => img.category === 'Fruits').length },
-    { id: 'Vegetables', name: 'Vegetables', count: images.filter(img => img.category === 'Vegetables').length },
-    { id: 'Grains', name: 'Grains', count: images.filter(img => img.category === 'Grains').length },
-    { id: 'Seeds', name: 'Seeds', count: images.filter(img => img.category === 'Seeds').length },
-    { id: 'Farm', name: 'Farm', count: images.filter(img => img.category === 'Farm').length }
-  ];
+  useEffect(() => {
+    if (open === null) return;
+    document.body.style.overflow = 'hidden';
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(null);
+      if (e.key === 'ArrowRight') step(1);
+      if (e.key === 'ArrowLeft') step(-1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open, step]);
 
-  const filteredImages = activeFilter === 'all' 
-    ? images 
-    : images.filter(image => image.category === activeFilter);
-
-  const openModal = (index: number) => {
-    const actualIndex = activeFilter === 'all' ? index : images.findIndex(img => img === filteredImages[index]);
-    setSelectedImage(actualIndex);
-  };
-
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
-
-  const nextImage = () => {
-    if (selectedImage !== null) {
-      setSelectedImage((selectedImage + 1) % images.length);
-    }
-  };
-
-  const prevImage = () => {
-    if (selectedImage !== null) {
-      setSelectedImage(selectedImage === 0 ? images.length - 1 : selectedImage - 1);
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Escape') closeModal();
-    if (event.key === 'ArrowRight') nextImage();
-    if (event.key === 'ArrowLeft') prevImage();
-  };
+  const current = open !== null ? shown[open] : null;
 
   return (
-    <section id="gallery" className="py-20 bg-gradient-to-br from-gray-50 to-green-50/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
-            <Camera className="w-8 h-8 text-green-600" />
-          </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-            Farm <span className="text-green-600">Gallery</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Explore our farming journey through stunning visuals. From our modern irrigation systems to bountiful harvests, 
-            witness the dedication and innovation behind every crop at Rohokale Farm.
-          </p>
-        </div>
+    <section id="gallery" className="bg-cream-100 py-20 sm:py-28 lg:py-32">
+      <div className="container-site">
+        <SectionHeading
+          align="center"
+          eyebrow="Gallery"
+          title="Life on the farm, season by season."
+          accent={[3, 4]}
+          intro="A look at our fields, our harvests and the people and tools behind them."
+        />
 
-        {/* Category Filters */}
-        <div className="flex flex-wrap justify-center gap-3 mb-12">
-          {categories.map((category) => (
+        <div data-reveal="up" className="mt-10 flex flex-wrap justify-center gap-2">
+          {CATS.map((c) => (
             <button
-              key={category.id}
-              onClick={() => setActiveFilter(category.id)}
-              className={`group flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                activeFilter === category.id
-                  ? 'bg-green-600 text-white shadow-lg transform scale-105'
-                  : 'bg-white text-gray-700 hover:bg-green-50 hover:text-green-600 shadow-sm border border-gray-200'
+              key={c}
+              onClick={() => setCat(c)}
+              className={`rounded-full px-5 py-2.5 text-sm font-bold transition-all duration-300 ${
+                cat === c ? 'scale-105 bg-forest text-cream-100 shadow-soft' : 'bg-cream-50 text-forest/70 ring-1 ring-forest/10 hover:text-forest hover:ring-forest/30'
               }`}
             >
-              <Filter className="w-4 h-4" />
-              {category.name}
-              <span className={`text-xs px-2 py-1 rounded-full ${
-                activeFilter === category.id
-                  ? 'bg-green-500 text-white'
-                  : 'bg-gray-200 text-gray-600 group-hover:bg-green-200'
-              }`}>
-                {category.count}
-              </span>
+              {c}
             </button>
           ))}
         </div>
 
-        {/* Stats Bar */}
-        <div className="bg-white rounded-2xl p-6 mb-12 shadow-lg border border-gray-100">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <div className="text-3xl font-bold text-green-600 mb-1">{images.length}</div>
-              <div className="text-gray-600 font-medium">Total Photos</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-green-600 mb-1">100+</div>
-              <div className="text-gray-600 font-medium">Tonnes/Year</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-green-600 mb-1">100%</div>
-              <div className="text-gray-600 font-medium">Organic Mangoes</div>
-            </div>
-            <div>
-              <div className="text-3xl font-bold text-green-600 mb-1">Modern</div>
-              <div className="text-gray-600 font-medium">Technology</div>
-            </div>
-          </div>
-        </div>
-
-        {/* Image Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredImages.map((image, index) => (
-            <div
-              key={index}
-              className="group relative cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white"
-              onClick={() => openModal(index)}
+        <div key={cat} className="mt-12 columns-2 gap-3 sm:gap-5 lg:columns-3 [&>*]:mb-3 sm:[&>*]:mb-5">
+          {shown.map((img, i) => (
+            <button
+              key={img.base}
+              data-reveal="zoom"
+              style={{ '--d': `${(i % 6) * 80}ms` } as React.CSSProperties}
+              onClick={() => setOpen(i)}
+              className="group relative block w-full break-inside-avoid overflow-hidden rounded-2xl bg-cream-200 text-left sm:rounded-3xl"
+              aria-label={`Open photo: ${img.title}`}
             >
-              <div className="relative overflow-hidden">
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-700"
-                  loading="lazy"
-                />
-                
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="bg-white/20 backdrop-blur-sm rounded-full p-4 transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                      <ZoomIn className="w-6 h-6 text-white" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Category Badge */}
-                <div className="absolute top-4 right-4 bg-green-600/90 backdrop-blur-sm text-white px-3 py-2 rounded-full text-xs font-semibold opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-                  {image.category}
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <h3 className="font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">
-                  {image.title}
-                </h3>
-                <p className="text-gray-600 text-sm line-clamp-2">{image.alt}</p>
-              </div>
-            </div>
+              <Picture
+                base={img.base}
+                alt={img.title}
+                className={`w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110 ${img.tall ? 'aspect-[3/4]' : 'aspect-[4/3]'}`}
+                sizes="(min-width:1024px) 30vw, 48vw"
+              />
+              <span className="absolute inset-0 bg-gradient-to-t from-forest/80 via-forest/0 to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-100" />
+              <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 sm:p-5">
+                <span className="translate-y-1 transition-transform duration-500 group-hover:translate-y-0">
+                  <span className="hidden text-[10px] font-bold uppercase tracking-[0.2em] text-keshar-400 sm:block">{img.category}</span>
+                  <span className="block font-display text-sm font-medium text-cream-100 sm:text-lg">{img.title}</span>
+                </span>
+                <span className="hidden h-9 w-9 shrink-0 scale-50 items-center justify-center rounded-full bg-cream-100 text-forest opacity-0 transition-all duration-500 group-hover:scale-100 group-hover:opacity-100 sm:flex">
+                  <Maximize2 className="h-4 w-4" />
+                </span>
+              </span>
+            </button>
           ))}
         </div>
+      </div>
 
-        {/* Load More Section */}
-        <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl p-8 text-white">
-            <Grid3X3 className="w-12 h-12 mx-auto mb-4 opacity-80" />
-            <h3 className="text-2xl font-bold mb-2">Want to See More?</h3>
-            <p className="text-green-100 mb-6">
-              Visit our farm to experience the beauty of organic farming firsthand
-            </p>
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 bg-white text-green-600 hover:bg-gray-100 font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-            >
-              <Camera className="w-5 h-5" />
-              Schedule Farm Visit
-            </a>
+      {/* Lightbox */}
+      {current && open !== null && (
+        <div
+          className="fixed inset-0 z-[60] flex flex-col bg-forest/95 backdrop-blur-md"
+          role="dialog"
+          aria-modal="true"
+          aria-label={current.title}
+          onClick={() => setOpen(null)}
+          onTouchStart={(e) => (touchX.current = e.touches[0].clientX)}
+          onTouchEnd={(e) => {
+            if (touchX.current === null) return;
+            const dx = e.changedTouches[0].clientX - touchX.current;
+            if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
+            touchX.current = null;
+          }}
+        >
+          <div className="container-site flex items-center justify-between py-4 text-cream-100">
+            <span className="text-sm font-semibold tabular-nums">
+              {open + 1} <span className="text-cream-100/50">/ {shown.length}</span>
+            </span>
+            <button className="hero-ctrl" onClick={() => setOpen(null)} aria-label="Close">
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="relative flex flex-1 items-center justify-center px-4 sm:px-20">
+            <Picture key={current.base} base={current.base} alt={current.title} loading="eager" onClick={(e) => e.stopPropagation()} className="lb-in max-h-[72vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl" />
+            <button className="hero-ctrl absolute left-4 hidden sm:inline-flex" onClick={(e) => (e.stopPropagation(), step(-1))} aria-label="Previous photo">
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button className="hero-ctrl absolute right-4 hidden sm:inline-flex" onClick={(e) => (e.stopPropagation(), step(1))} aria-label="Next photo">
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+          <div className="container-site py-6 text-center text-cream-100">
+            <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-keshar-400">{current.category}</p>
+            <p className="mt-1 font-display text-xl sm:text-2xl">{current.title}</p>
+            <p className="mt-2 text-xs text-cream-100/50 sm:hidden">Swipe to browse</p>
           </div>
         </div>
-
-        {/* Enhanced Modal */}
-        {selectedImage !== null && (
-          <div 
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
-            onKeyDown={handleKeyDown}
-            tabIndex={0}
-          >
-            <div className="relative max-w-6xl max-h-full w-full">
-              {/* Close Button */}
-              <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-200 hover:scale-110"
-              >
-                <X className="w-6 h-6" />
-              </button>
-              
-              {/* Navigation Buttons */}
-              <button
-                onClick={prevImage}
-                className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-200 hover:scale-110"
-              >
-                <ChevronLeft className="w-6 h-6" />
-              </button>
-              
-              <button
-                onClick={nextImage}
-                className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white p-3 rounded-full transition-all duration-200 hover:scale-110"
-              >
-                <ChevronRight className="w-6 h-6" />
-              </button>
-
-              {/* Image */}
-              <div className="flex items-center justify-center h-full">
-                <img
-                  src={images[selectedImage].src}
-                  alt={images[selectedImage].alt}
-                  className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
-                />
-              </div>
-              
-              {/* Image Info */}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/10 backdrop-blur-md rounded-xl p-6 text-white">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="bg-green-600 px-3 py-2 rounded-full text-sm font-semibold">
-                    {images[selectedImage].category}
-                  </span>
-                  <span className="text-sm opacity-75">
-                    {selectedImage + 1} of {images.length}
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">{images[selectedImage].title}</h3>
-                <p className="text-sm opacity-90">{images[selectedImage].alt}</p>
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </section>
   );
 };

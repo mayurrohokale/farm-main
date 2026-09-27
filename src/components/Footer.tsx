@@ -1,152 +1,144 @@
 import React from 'react';
-import { Leaf, Phone, Mail, MapPin, Instagram, Youtube, Heart } from 'lucide-react';
+import { ArrowUp, ArrowUpRight, Heart, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-react';
+import Logo from './ui/Logo';
+import Marquee from './Marquee';
+import { PRODUCTS, SITE, telHref } from '../lib/site';
 
-const Footer: React.FC = () => {
-  const currentYear = new Date().getFullYear();
+const Footer: React.FC = () => (
+  <footer className="relative overflow-hidden bg-forest text-cream-100">
+    <Marquee tone="dark" />
 
-  return (
-    <footer className="bg-gray-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Company Info */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="">
-                <img
-                  src='/cropped-logo.png'
-                  alt="Rohokale Farm Logo"
-                  className="w-12 h-12 object-contain"
-                />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white">Rohokale Farm</h3>
-                <p className="text-green-400 text-sm">Generations of Quality.</p>
-              </div>
-            </div>
-            
-            <p className="text-gray-300 text-sm leading-relaxed mb-6">
-              Leading sustainable agriculture with 100+ tonnes annual production. 
-              Premium organic produce with modern farming practices.
-            </p>
+    <div className="container-site relative py-16 sm:py-20">
+      {/* big CTA */}
+      <div className="flex flex-col items-start justify-between gap-8 border-b border-white/10 pb-14 lg:flex-row lg:items-end">
+        <h2 data-split className="max-w-3xl font-display text-4xl font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+          {['Good', 'food', 'starts', 'in'].map((w, i) => (
+            <React.Fragment key={w}>
+              <span className="split-word">
+                <span style={{ '--d': `${i * 80}ms` } as React.CSSProperties}>{w}</span>
+              </span>{' '}
+            </React.Fragment>
+          ))}
+          <span className="split-word">
+            <span style={{ '--d': '320ms' } as React.CSSProperties} className="font-normal italic text-keshar-400">
+              good soil.
+            </span>
+          </span>
+        </h2>
+        <a href="#contact" data-reveal="up" className="btn-primary shrink-0">
+          Start an enquiry <ArrowUpRight className="h-4 w-4" />
+        </a>
+      </div>
 
-            {/* Social Media */}
-            <div className="flex space-x-3">
+      <div className="grid gap-12 pt-14 sm:grid-cols-2 lg:grid-cols-12">
+        <div className="lg:col-span-4">
+          <Logo tone="light" />
+          <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream-100/60">
+            A family farm in Maharashtra growing premium onions, organic Keshar mangoes, sweet lime and millets.
+          </p>
+          <div className="mt-6 flex gap-3">
+            {[
+              { icon: Instagram, label: 'Instagram' },
+              { icon: Youtube, label: 'YouTube' },
+            ].map(({ icon: Icon, label }) => (
               <a
+                key={label}
                 href="#"
-                aria-label="Instagram"
-                className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors duration-300"
+                aria-label={label}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 transition-all duration-300 hover:-translate-y-1 hover:border-keshar-500 hover:bg-keshar-500 hover:text-forest"
               >
-                <Instagram className="w-4 h-4" />
+                <Icon className="h-4 w-4" />
               </a>
-              <a
-                href="#"
-                aria-label="YouTube"
-                className="w-10 h-10 bg-gray-800 hover:bg-green-600 rounded-lg flex items-center justify-center transition-colors duration-300"
-              >
-                <Youtube className="w-4 h-4" />
-              </a>
-            </div>
+            ))}
           </div>
+        </div>
 
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Quick Links</h4>
-            <ul className="space-y-2">
-              {[
-                { name: 'Home', href: '#home' },
-                { name: 'About Us', href: '#about' },
-                { name: 'Products', href: '#products' },
-                { name: 'Gallery', href: '#gallery' },
-                { name: 'Contact', href: '#contact' }
-              ].map((link, index) => (
-                <li key={index}>
-                  <a 
-                    href={link.href} 
-                    className="text-gray-300 hover:text-green-400 transition-colors duration-200 text-sm"
-                  >
-                    {link.name}
+        <div className="lg:col-span-2">
+          <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-keshar-400">Explore</h3>
+          <ul className="mt-5 space-y-3 text-sm">
+            {[
+              ['Our story', '#about'],
+              ['Produce', '#products'],
+              ['Gallery', '#gallery'],
+              ['Visit the farm', '#visit'],
+              ['Contact', '#contact'],
+            ].map(([n, h]) => (
+              <li key={h}>
+                <a href={h} className="link-draw text-cream-100/75 hover:text-cream-100">
+                  {n}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-keshar-400">What we grow</h3>
+          <ul className="mt-5 space-y-3 text-sm text-cream-100/75">
+            {PRODUCTS.map((p) => (
+              <li key={p.id}>{p.name}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="lg:col-span-3">
+          <h3 className="text-[11px] font-bold uppercase tracking-[0.2em] text-keshar-400">Reach us</h3>
+          <ul className="mt-5 space-y-4 text-sm text-cream-100/75">
+            <li className="flex gap-3">
+              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-keshar-400" />
+              <span className="flex flex-col gap-1">
+                {SITE.phones.map((p) => (
+                  <a key={p} href={telHref(p)} className="link-draw hover:text-cream-100">
+                    {p}
                   </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Products */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Our Products</h4>
-            <ul className="space-y-2">
-              {[
-                'Premium Onions & sweet-limes',
-                'Organic Keshar & other Mangoes', 
-                // 'Fresh Vegetables',
-                'Grains & Millets',
-                'onion Seeds & Crops'
-              ].map((product, index) => (
-                <li key={index} className="text-gray-300 text-sm flex items-center">
-                  <Leaf className="w-3 h-3 text-green-400 mr-2 flex-shrink-0" />
-                  {product}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Contact Us</h4>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Phone className="w-4 h-4 text-green-400 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-300 text-sm">+91 9284659472</p>
-                  <p className="text-gray-300 text-sm">+91 8080272025</p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-green-400 flex-shrink-0" />
-                <div>
-                  <p className="text-gray-300 text-sm">info@rohokalefarm.com</p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-3">
-                <MapPin className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <div>
-                  <p className="text-gray-300 text-sm">Bhoyare Pathar, Daithane Gunjal,</p>
-                  <p className='text-gray-300 text-sm'>M55C+5HQ Talpimpri, Sambhajinagar,</p>
-                  <p className="text-gray-300 text-sm">Maharashtra, India</p>
-                </div>
-              </div>
-            </div>
-          </div>
+                ))}
+              </span>
+            </li>
+            <li className="flex gap-3">
+              <Mail className="mt-0.5 h-4 w-4 shrink-0 text-keshar-400" />
+              <a href={`mailto:${SITE.email}`} className="link-draw break-all hover:text-cream-100">
+                {SITE.email}
+              </a>
+            </li>
+            <li className="flex gap-3">
+              <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-keshar-400" />
+              <span>
+                Daithane Gunjal &amp; Talpimpri,
+                <br />
+                Maharashtra, India
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
+    </div>
 
-      {/* Bottom Bar */}
-      <div className="bg-gray-950 py-4">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center">
-            <div className="flex items-center space-x-2 mb-2 sm:mb-0">
-              <p className="text-gray-400 text-sm">
-                © {currentYear} Rohokale Farm. All rights reserved.
-              </p>
-              <p>Crafted with Love</p>
-              <Heart className="w-3 h-3 text-red-400" />
-            </div>
-            
-            <div className="flex space-x-6">
-              <a href="#privacy-policy" className="text-gray-400 hover:text-green-400 text-sm transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#terms" className="text-gray-400 hover:text-green-400 text-sm transition-colors">
-                Terms of Service
-              </a>
-            </div>
-          </div>
+    {/* giant wordmark */}
+    <div aria-hidden="true" className="pointer-events-none select-none overflow-hidden">
+      <p data-reveal="up" className="container-site -mb-[0.22em] whitespace-nowrap font-display text-[22vw] font-semibold leading-none tracking-tighter text-white/[0.05] lg:text-[17vw]">
+        Rohokale
+      </p>
+    </div>
+
+    <div className="border-t border-white/10">
+      <div className="container-site flex flex-col items-center justify-between gap-4 py-6 text-xs text-cream-100/50 sm:flex-row">
+        <p className="flex items-center gap-1.5">
+          © {new Date().getFullYear()} Rohokale Farm · Crafted with <Heart className="h-3 w-3 fill-onion-500 text-onion-500" />
+        </p>
+        <div className="flex items-center gap-6">
+          <a href="#privacy-policy" className="hover:text-cream-100">
+            Privacy
+          </a>
+          <a href="#terms" className="hover:text-cream-100">
+            Terms
+          </a>
+          <a href="#home" className="inline-flex items-center gap-1 font-semibold text-cream-100/80 hover:text-keshar-400">
+            Back to top <ArrowUp className="h-3.5 w-3.5" />
+          </a>
         </div>
       </div>
-    </footer>
-  );
-};
+    </div>
+  </footer>
+);
 
 export default Footer;

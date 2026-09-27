@@ -1,257 +1,168 @@
-import React, { useState } from 'react';
-import { Leaf, Star, Award, Droplets, Shield, Sprout, ChevronRight, Eye } from 'lucide-react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { ArrowUpRight, Check, Phone, Star } from 'lucide-react';
+import SectionHeading from './ui/SectionHeading';
+import Picture from './ui/Picture';
+import { PRODUCTS, Product, SITE, inquireAbout, telHref } from '../lib/site';
+import { useTilt } from '../lib/motion';
+
+const FILTERS = [
+  { id: 'all', name: 'All' },
+  { id: 'vegetables', name: 'Vegetables' },
+  { id: 'fruits', name: 'Fruits' },
+  { id: 'grains', name: 'Grains & Millets' },
+  { id: 'seeds', name: 'Seeds' },
+] as const;
+
+const ACCENT: Record<Product['accent'], string> = {
+  onion: 'bg-onion-500 text-white',
+  keshar: 'bg-keshar-500 text-forest',
+  leaf: 'bg-leaf-600 text-white',
+  soil: 'bg-soil-500 text-cream-100',
+};
+
+const ProductCard: React.FC<{ p: Product; i: number }> = ({ p, i }) => {
+  const tilt = useTilt<HTMLElement>(5);
+  return (
+    <div data-reveal="up" style={{ '--d': `${(i % 3) * 110}ms` } as React.CSSProperties}>
+      <article
+        ref={tilt}
+        className="group relative flex h-full flex-col overflow-hidden rounded-[1.75rem] bg-cream-50 shadow-soft ring-1 ring-forest/5 transition-[transform,box-shadow] duration-300 ease-out hover:shadow-lift"
+      >
+        {/* cursor spotlight */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 z-20 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          style={{ background: 'radial-gradient(420px circle at var(--mx,50%) var(--my,50%), rgba(233,162,59,.14), transparent 45%)' }}
+        />
+        <div className="relative aspect-[4/3] overflow-hidden">
+          <Picture base={p.image} alt={p.name} className="h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110" sizes="(min-width:1024px) 30vw, (min-width:768px) 45vw, 92vw" />
+          <div className="absolute inset-0 bg-gradient-to-t from-forest/60 via-transparent to-transparent" />
+          <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+            <span className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wider ${ACCENT[p.accent]}`}>{p.season}</span>
+            {p.featured && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-cream-50/90 px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-forest backdrop-blur">
+                <Star className="h-3 w-3 fill-keshar-500 text-keshar-500" /> Signature
+              </span>
+            )}
+          </div>
+          {p.stat && (
+            <div className="absolute bottom-3 right-4 font-display text-4xl font-semibold text-cream-100 drop-shadow transition-transform duration-500 group-hover:-translate-y-1">
+              {p.stat}
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-1 flex-col p-6 sm:p-7">
+          <div className="flex items-baseline justify-between gap-3">
+            <h3 className="font-display text-2xl font-semibold text-forest">{p.name}</h3>
+            {p.local && <span className="shrink-0 font-display text-sm italic text-ink/45">{p.local}</span>}
+          </div>
+          <p className="mt-3 text-sm leading-relaxed text-ink/65">{p.description}</p>
+          <ul className="mt-5 space-y-2">
+            {p.features.map((f) => (
+              <li key={f} className="flex items-center gap-2.5 text-sm font-semibold text-forest/85">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-leaf-100 text-leaf-700">
+                  <Check className="h-3 w-3" strokeWidth={3} />
+                </span>
+                {f}
+              </li>
+            ))}
+          </ul>
+          <button
+            onClick={() => inquireAbout(p.name)}
+            className="mt-7 inline-flex items-center justify-between gap-2 rounded-full border-2 border-forest/10 py-2 pl-5 pr-2 text-sm font-bold text-forest transition-all duration-300 hover:border-forest hover:bg-forest hover:text-cream-100"
+          >
+            Enquire about {p.name.split(' ').slice(-1)[0].toLowerCase()}
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-keshar-500 text-forest transition-transform duration-300 group-hover:rotate-45">
+              <ArrowUpRight className="h-4 w-4" />
+            </span>
+          </button>
+        </div>
+      </article>
+    </div>
+  );
+};
 
 const Products: React.FC = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
+  const [filter, setFilter] = useState<(typeof FILTERS)[number]['id']>('all');
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
 
-  const categories = [
-    { id: 'all', name: 'All Products', count: 7 },
-    { id: 'vegetables', name: 'Vegetables', count: 2 },
-    { id: 'grains', name: 'Grains & Millets', count: 3 },
-    { id: 'fruits', name: 'Fruits', count: 1 },
-    { id: 'seeds', name: 'Seeds', count: 1 }
-  ];
+  // sliding pill behind the active filter
+  useLayoutEffect(() => {
+    const update = () => {
+      const el = tabsRef.current?.querySelector<HTMLButtonElement>(`[data-id="${filter}"]`);
+      if (el) setIndicator({ left: el.offsetLeft, width: el.offsetWidth });
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [filter]);
 
-  const products = [
-    {
-      name: 'Premium Onions',
-      description: 'High-quality onions with annual production of up to 55 tonnes. Fresh, organic, and directly from our farm using modern agricultural practices.',
-      image: '/images/onion2.jpg',
-      features: ['55+ tonnes/year', '10 Month+ shelf life', 'Multiple varieties', 'high yeild production', 'Modern farming'],
-      highlight: true, // Featured
-      category: 'vegetables',
-      price: 'Contact for pricing',
-      availability: 'Year-round'
-    },
-    {
-      name: 'Organic Keshar Mangoes',
-      description: 'Premium quality Keshar mangoes grown organically. Multiple varieties available during summer season with exceptional taste and quality.',
-      image: '/images/mango3.png',
-      features: [ '100% organic','Multiple varieties', 'Summer harvest', 'Premium quality', 'Rich in vitamin C'],
-      category: 'fruits',
-      price: 'Seasonal pricing',
-      availability: 'Summer season'
-    },
-    {
-      name: 'Sweet lime',
-      description: 'Juicy and refreshing sweet limes grown with organic practices. Perfect for fresh consumption and rich in vitamin C.',
-      image: '/images/lime2.jpg',
-      features: ['Premium quality', 'Rich in vitamin C', '50+ tonnes/year', 'Juicy and refreshing', 'modern practices'],
-      highlight: true, // Featured
-      category: 'fruits',
-      price: 'Contact for pricing',
-      availability: 'Available'
-    },
-    {
-      name: 'Premium Onion Seeds',
-      description: 'High-quality onion seeds and crops for farming. Carefully selected varieties with high yield potential and disease resistance.',
-      image: '/images/onion-seeds.png',
-      features: ['High germination rate', 'Disease resistant', 'Premium quality', 'Expert selection'],
-      category: 'seeds',
-      price: 'Contact for booking',
-      availability: 'Available'
-    },
-    {
-      name: 'Jowar (Sorghum)',
-      description: 'Traditional millet grain packed with nutrition. Drought-resistant crop grown with organic methods, perfect for health-conscious consumers.',
-      image: '/images/jowar.png',
-      features: ['Gluten-free', 'High protein', 'Drought resistant', 'Traditional farming'],
-      category: 'grains',
-      price: 'Seasonal pricing',
-      availability: 'Available'
-    },
-    {
-      name: 'Bajra (Pearl Millet)',
-      description: 'Nutritious pearl millet rich in iron and fiber. Grown sustainably for health-conscious consumers with traditional organic methods.',
-      image: '/images/bajara.png',
-      features: ['Iron rich', 'High fiber', 'Sustainable crop', 'Nutrient dense'],
-      category: 'grains',
-      price: 'Seasonal pricing',
-      availability: 'Available'
-    },
-    // {
-    //   name: 'Green Gram (Moong)',
-    //   description: 'High-protein green gram beans perfect for various culinary uses. Grown organically with traditional farming methods.',
-    //   image: '/images/moong.jpg',
-    //   features: ['High protein', 'Organic farming', 'Traditional methods', 'Versatile use'],
-    //   category: 'grains',
-    //   price: '₹120-150/kg',
-    //   availability: 'Available'
-    // }
-  ];
-
-  const filteredProducts = activeCategory === 'all'
-    ? products
-    : products.filter(product => product.category === activeCategory);
-
-  const getIcon = (feature: string) => {
-    const lowerFeature = feature.toLowerCase();
-    if (lowerFeature.includes('organic') || lowerFeature.includes('vitamin')) return <Leaf className="w-4 h-4 text-green-600" />;
-    if (lowerFeature.includes('tonnes') || lowerFeature.includes('quality') || lowerFeature.includes('protein') || lowerFeature.includes('iron')) return <Award className="w-4 h-4 text-orange-600" />;
-    if (lowerFeature.includes('resistant') || lowerFeature.includes('shelf life') || lowerFeature.includes('chemical-free')) return <Shield className="w-4 h-4 text-blue-600" />;
-    if (lowerFeature.includes('modern') || lowerFeature.includes('varieties') || lowerFeature.includes('harvest') || lowerFeature.includes('farming')) return <Sprout className="w-4 h-4 text-purple-600" />;
-    return <Droplets className="w-4 h-4 text-cyan-600" />;
-  };
+  const shown = filter === 'all' ? PRODUCTS : PRODUCTS.filter((p) => p.category === filter);
 
   return (
-    <section id="products" className="py-20 bg-gradient-to-br from-gray-50 to-green-50/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-6">
-            <Sprout className="w-8 h-8 text-green-600" />
+    <section id="products" className="relative bg-cream-200/60 py-20 sm:py-28 lg:py-32">
+      <div className="container-site">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <SectionHeading
+            eyebrow="Our produce"
+            title="Fresh from our fields to your business."
+            accent={[3, 4]}
+            intro="Grown with modern, sustainable practices and supplied fresh or in bulk. Pricing depends on season and quantity — ask us for a quote."
+          />
+          <div className="-mx-4 overflow-x-auto px-4 pb-1 [scrollbar-width:none] sm:mx-0 sm:px-0" data-reveal="up">
+            <div ref={tabsRef} role="tablist" aria-label="Filter produce" className="relative inline-flex rounded-full bg-cream-50 p-1.5 shadow-soft ring-1 ring-forest/5">
+              <span
+                aria-hidden="true"
+                className="absolute bottom-1.5 top-1.5 rounded-full bg-forest transition-all duration-500 ease-[cubic-bezier(.5,1.6,.4,.9)]"
+                style={{ left: indicator.left, width: indicator.width }}
+              />
+              {FILTERS.map((f) => (
+                <button
+                  key={f.id}
+                  data-id={f.id}
+                  role="tab"
+                  aria-selected={filter === f.id}
+                  onClick={() => setFilter(f.id)}
+                  className={`relative z-10 whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-bold transition-colors duration-300 sm:px-5 ${
+                    filter === f.id ? 'text-cream-100' : 'text-forest/70 hover:text-forest'
+                  }`}
+                >
+                  {f.name}
+                </button>
+              ))}
+            </div>
           </div>
-          <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
-            Our Premium <span className="text-green-600">Products</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Farm-fresh, organic produce grown with modern sustainable practices. From our fields to your table,
-            experience the difference of authentic organic farming at Rohokale Farm.
-          </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveCategory(category.id)}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 flex items-center gap-2 ${activeCategory === category.id
-                ? 'bg-green-600 text-white shadow-lg transform scale-105'
-                : 'bg-white text-gray-700 hover:bg-green-50 hover:text-green-600 shadow-sm'
-                }`}
-            >
-              {category.name}
-              <span className={`text-xs px-2 py-1 rounded-full ${activeCategory === category.id
-                ? 'bg-green-500 text-white'
-                : 'bg-gray-200 text-gray-600'
-                }`}>
-                {category.count}
-              </span>
-            </button>
+        <div key={filter} className="mt-12 grid gap-6 md:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-8">
+          {shown.map((p, i) => (
+            <ProductCard key={p.id} p={p} i={i} />
           ))}
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {filteredProducts.map((product, index) => (
-            <div
-              key={index}
-              className={`group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden transform hover:-translate-y-2 flex flex-col ${product.highlight ? 'ring-2 ring-green-500 relative' : ''
-                }`}
-            >
-              {product.highlight && (
-                <div className="absolute top-4 left-4 z-10 bg-gradient-to-r from-green-500 to-green-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg flex items-center gap-2">
-                  <Star className="w-4 h-4" />
-                  Featured Product
-                </div>
-              )}
-
-              <div className="relative overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                {/* Organic Badge */}
-                <div className="absolute top-4 right-4 bg-green-600/90 backdrop-blur-sm text-white px-3 py-2 rounded-full text-xs font-semibold flex items-center gap-1">
-                  {getIcon(product.features[0])}
-                  {product.features[0]}
-                </div>
-
-                {/* Quick View Overlay */}
-                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                  <button className="bg-white text-gray-800 px-6 py-3 rounded-full font-semibold flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                    <Eye className="w-4 h-4" />
-                    Quick View
-                  </button>
-                </div>
-              </div>
-
-              <div className="p-8 flex-grow flex flex-col">
-                {/* Header */}
-                <div className="mb-4">
-                  <h3 className="text-2xl font-bold text-gray-800 mb-2 group-hover:text-green-600 transition-colors">
-                    {product.name}
-                  </h3>
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
-                      {product.availability}
-                    </span>
-                    <span className="text-green-600 font-bold">{product.price}</span>
-                  </div>
-                </div>
-
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  {product.description}
-                </p>
-
-                {/* Features */}
-                <div className="space-y-3 mb-6 flex-grow">
-                  {product.features.slice(0, 3).map((feature, featureIndex) => (
-                    <div key={featureIndex} className="flex items-center space-x-3">
-                      {getIcon(feature)}
-                      <span className="text-gray-700 font-medium">{feature}</span>
-                    </div>
-                  ))}
-                  {product.features.length > 3 && (
-                    <div className="text-green-600 text-sm font-medium">
-                      +{product.features.length - 3} more features
-                    </div>
-                  )}
-                </div>
-
-                {/* Action Buttons - Now at the bottom */}
-                <div className="flex gap-3 mt-auto">
-                  <button className="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg">
-                    Inquire Now
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <button className="p-3 border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white rounded-xl transition-all duration-300">
-                    <Eye className="w-5 h-5" />
-                  </button>
-                </div>
-              </div>
+        {/* Bulk CTA */}
+        <div data-reveal="zoom" className="relative mt-16 overflow-hidden rounded-[2rem] bg-keshar-500 px-6 py-12 text-forest sm:px-12 lg:mt-24 lg:px-16 lg:py-16">
+          <svg className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 animate-spin-slow text-forest/10" viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M12 0c.6 6.4 5.6 11.4 12 12-6.4.6-11.4 5.6-12 12-.6-6.4-5.6-11.4-12-12C6.4 11.4 11.4 6.4 12 0Z" />
+          </svg>
+          <div className="relative grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
+            <div>
+              <span className="eyebrow !text-forest/70">Bulk & custom orders</span>
+              <h3 className="mt-4 font-display text-3xl font-semibold leading-tight sm:text-4xl lg:text-5xl">
+                Supplying traders, retailers & <em className="font-normal">restaurants.</em>
+              </h3>
+              <p className="mt-4 max-w-xl text-forest/75">
+                Competitive pricing, custom packing and dependable dispatch schedules — tell us what you need and when.
+              </p>
             </div>
-
-          ))}
-        </div>
-
-        {/* Custom Orders Section */}
-        <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-3xl p-12 text-center text-white relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-32 h-32 bg-white rounded-full -translate-x-16 -translate-y-16"></div>
-            <div className="absolute bottom-0 right-0 w-40 h-40 bg-white rounded-full translate-x-20 translate-y-20"></div>
-          </div>
-
-          <div className="relative z-10">
-            <div className="inline-flex items-center justify-center w-16 h-16 bg-white/20 rounded-full mb-6">
-              <Award className="w-8 h-8 text-white" />
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">
-              Custom Orders & Bulk Supply
-            </h3>
-            <p className="text-xl opacity-90 mb-8 max-w-3xl mx-auto leading-relaxed">
-              We specialize in bulk supply for restaurants, retailers, and distributors.
-              Get competitive pricing, custom packaging, and reliable delivery schedules tailored to your business needs.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <a
-                href="#contact"
-                className="bg-white text-green-600 hover:bg-gray-100 font-semibold py-4 px-8 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center gap-2"
-              >
-                <Sprout className="w-5 h-5" />
-                Contact for Custom Orders
-              </a>
-              <a
-                href="tel:+919876543210"
-                className="border-2 border-white text-white hover:bg-white hover:text-green-600 font-semibold py-4 px-8 rounded-xl transition-all duration-300"
-              >
-                Call Now: +91 98765 43210
+            <div className="flex flex-col gap-3 sm:flex-row lg:flex-col lg:items-end">
+              <button onClick={() => inquireAbout('Bulk order')} className="btn-dark">
+                Request a bulk quote <ArrowUpRight className="h-4 w-4" />
+              </button>
+              <a href={telHref(SITE.phones[0])} className="btn border-2 border-forest/20 text-forest hover:border-forest">
+                <Phone className="h-4 w-4" /> {SITE.phones[0]}
               </a>
             </div>
           </div>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Rohokale Farm">
+  <defs><clipPath id="c"><circle cx="32" cy="32" r="30"/></clipPath></defs>
+  <circle cx="32" cy="32" r="32" fill="#14301F"/>
+  <g clip-path="url(#c)">
+    <circle cx="32" cy="36" r="13" fill="#E9A23B"/>
+    <path d="M0 38h64v26H0z" fill="#2F7D3A"/>
+    <g stroke="#14301F" stroke-width="2.2" stroke-linecap="round" fill="none">
+      <path d="M32 38 6 66M32 38 19 66M32 38v28M32 38l13 28M32 38l26 28"/>
+    </g>
+  </g>
+  <path d="M32 39V25" stroke="#F7F2E8" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M32 31c-1-6-6-9-12-8 1 6 6 9 12 8Z" fill="#F7F2E8"/>
+  <path d="M32 27c1-7 6-11 13-10-1 7-6 11-13 10Z" fill="#9CCB5B"/>
+  <circle cx="32" cy="32" r="30.5" fill="none" stroke="#E9A23B" stroke-opacity=".55" stroke-width="1"/>
+</svg>

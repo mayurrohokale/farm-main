@@ -4,6 +4,12 @@ import SectionHeading from './ui/SectionHeading';
 import Picture from './ui/Picture';
 
 const IMAGES = [
+  { base: '/img/sunset-field', title: 'Golden hour over the crop', category: 'Fields', tall: true },
+  { base: '/img/onion-seeds-hand', title: 'Onion seed, ready for sowing', category: 'Seeds', tall: true },
+  { base: '/img/drip-lines', title: 'Drip lines at sunrise', category: 'Technology', tall: true },
+  { base: '/img/mango-tree', title: 'Keshar mangoes on the tree', category: 'Harvest', tall: true },
+  { base: '/img/wheat-green', title: 'Young wheat ears', category: 'Fields', tall: true },
+  { base: '/img/wheat-field', title: 'Wheat turning gold', category: 'Fields', tall: true },
   { base: '/img/onion_field', title: 'Onion fields in full growth', category: 'Fields', tall: true },
   { base: '/img/mango', title: 'Organic Keshar mangoes', category: 'Harvest' },
   { base: '/img/drip', title: 'Drip-irrigated rows', category: 'Technology' },

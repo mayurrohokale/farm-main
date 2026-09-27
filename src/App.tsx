@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import Marquee from './components/Marquee';
 import About from './components/About';
 import Process from './components/Process';
+import Irrigation from './components/Irrigation';
 import Products from './components/Products';
 import Gallery from './components/Gallery';
 import Contact from './components/Contact';
@@ -43,6 +44,7 @@ function App() {
         <Marquee />
         <About />
         <Process />
+        <Irrigation />
         <Products />
         <Gallery />
         <Contact />

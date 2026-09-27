@@ -10,7 +10,7 @@ const path = require('path');
 
 const SRC = path.join(__dirname, '../public/images');
 const OUT = path.join(__dirname, '../public/img');
-const FILES = ['field.jpg', 'drip.jpg', 'green_onion.jpg', 'onion.jpg', 'onion2.jpg', 'onion3.jpg', 'onion_field.jpg', 'mango.jpg', 'mango3.png', 'lime.jpg', 'lime2.jpg', 'jowar.png', 'bajara.png', 'onion-seeds.png', '1682310464179.jpg'];
+const FILES = ['field.jpg', 'drip.jpg', 'green_onion.jpg', 'onion.jpg', 'onion2.jpg', 'onion3.jpg', 'onion_field.jpg', 'mango.jpg', 'mango3.png', 'lime.jpg', 'lime2.jpg', 'jowar.png', 'bajara.png', 'onion-seeds.png', '1682310464179.jpg', 'onion-seeds-hand.jpg', 'sunset-field.jpg', 'mango-tree.jpg', 'drip-lines.jpg', 'wheat-green.jpg', 'wheat-field.jpg'];
 const WIDTHS = [720, 1280, 1920];
 
 (async () => {

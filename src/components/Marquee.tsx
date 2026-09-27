@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ITEMS = ['Premium Onions', 'Keshar Mangoes', 'Sweet Lime', 'Onion Seeds', 'Jowar', 'Bajra', 'Drip Irrigated', 'Authentic Seed'];
+const ITEMS = ['Premium Onions', 'Keshar Mangoes', 'Sweet Lime', 'Onion Seeds', 'Wheat', 'Jowar', 'Bajra', 'Drip Irrigated', 'Authentic Seed'];
 
 const Star = () => (
   <svg viewBox="0 0 24 24" className="h-5 w-5 shrink-0 text-keshar-500 sm:h-6 sm:w-6" aria-hidden="true">

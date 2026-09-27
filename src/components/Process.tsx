@@ -6,7 +6,7 @@ import { useInView } from '../lib/motion';
 
 const STEPS = [
   { icon: Sprout, title: 'Select the seed', text: 'Authentic, high-germination seed chosen for our soil and climate.', img: '/img/onion-seeds' },
-  { icon: Sun, title: 'Grow with care', text: 'Drip-irrigated rows, balanced nutrition and daily attention in the field.', img: '/img/green_onion' },
+  { icon: Sun, title: 'Grow with care', text: 'Drip-irrigated rows, balanced nutrition and daily attention in the field.', img: '/img/wheat-green' },
   { icon: PackageCheck, title: 'Harvest & sort', text: 'Picked at the right time, then graded and sorted by hand for quality.', img: '/img/onion2' },
   { icon: Truck, title: 'Store & deliver', text: 'Stored in ventilated sheds and packed to order for our buyers.', img: '/img/1682310464179' },
 ];

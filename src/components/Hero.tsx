@@ -9,7 +9,8 @@ const SLIDES = [
   { base: '/img/1682310464179', alt: 'Fields at dusk with wind turbines on the hills', caption: 'Evening over the fields', place: 'Daithane Gunjal' },
   { base: '/img/onion3', alt: 'A basket of freshly harvested red onions', caption: 'Fresh harvest', place: '55+ tonnes a year' },
   { base: '/img/lime', alt: 'Sweet lime trees heavy with fruit', caption: 'Sweet lime orchard', place: '50+ tonnes a year' },
-  { base: '/img/drip', alt: 'Freshly prepared rows with drip irrigation', caption: 'Drip-irrigated rows', place: 'Talpimpri' },
+  { base: '/img/sunset-field', alt: 'Sun setting behind a tree over a lush green field', caption: 'Golden hour on the farm', place: 'Evening light', pos: '50% 28%' },
+  { base: '/img/drip-lines', alt: 'Long rows of drip lines across freshly prepared soil at sunrise', caption: 'Drip lines laid for the new crop', place: 'Every row irrigated', pos: '50% 45%' },
 ];
 
 const DURATION = 6500;
@@ -80,6 +81,7 @@ const Hero: React.FC = () => {
               alt={s.alt}
               loading={i === 0 ? 'eager' : 'lazy'}
               className={`h-full w-full object-cover ${i === current ? 'animate-kenburns' : ''}`}
+              style={{ objectPosition: 'pos' in s ? s.pos : undefined }}
             />
           </div>
         ))}

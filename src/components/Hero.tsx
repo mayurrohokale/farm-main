@@ -9,9 +9,8 @@ const SLIDES = [
   { base: '/img/sunset-field', alt: 'Sun setting behind a tree over a lush green field', caption: 'Golden hour on the farm', place: 'Evening light', pos: '50% 28%' },
   { base: '/img/green_onion', alt: 'Onion crop with hills and wind turbines in the distance', caption: 'Onion fields', place: 'Daithane Gunjal', pos: '50% 40%' },
   { base: '/img/onion3', alt: 'A basket of freshly harvested red onions', caption: 'Fresh onion harvest', place: '55+ tonnes a year', pos: '50% 50%' },
-  { base: '/img/mango', alt: 'A crate of organic Keshar mangoes', caption: 'Organic Keshar mangoes', place: 'Summer harvest', pos: '50% 50%' },
+  { base: '/img/mango-tree', alt: 'Keshar mangoes ripening on the tree', caption: 'Keshar mangoes on the tree', place: '100% organic', pos: '50% 55%' },
   { base: '/img/wheat-field', alt: 'Wheat field turning golden under a clear sky', caption: 'Wheat turning gold', place: 'Rabi season', pos: '50% 42%' },
-  { base: '/img/lime', alt: 'Sweet lime trees heavy with fruit', caption: 'Sweet lime orchard', place: '50+ tonnes a year', pos: '50% 50%' },
 ];
 
 const DURATION = 6500;

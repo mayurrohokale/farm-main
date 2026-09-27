@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import Picture from './ui/Picture';
+import { LogoSeal } from './ui/Logo';
 import { useCountUp, useInView } from '../lib/motion';
 
 const SLIDES = [
@@ -8,6 +9,7 @@ const SLIDES = [
   { base: '/img/mango', alt: 'A crate of organic Keshar mangoes', caption: 'Organic Keshar mangoes', place: 'Summer harvest' },
   { base: '/img/1682310464179', alt: 'Fields at dusk with wind turbines on the hills', caption: 'Evening over the fields', place: 'Daithane Gunjal' },
   { base: '/img/onion3', alt: 'A basket of freshly harvested red onions', caption: 'Fresh harvest', place: '55+ tonnes a year' },
+  { base: '/img/lime', alt: 'Sweet lime trees heavy with fruit', caption: 'Sweet lime orchard', place: '50+ tonnes a year' },
   { base: '/img/drip', alt: 'Freshly prepared rows with drip irrigation', caption: 'Drip-irrigated rows', place: 'Talpimpri' },
 ];
 
@@ -86,24 +88,13 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-forest/70 via-forest/20 to-transparent" />
       </div>
 
-      {/* Rotating sun badge */}
+      {/* Brand seal — ring text rotates, monogram stays upright */}
       <div
         className={`absolute right-4 top-28 hidden transition-all delay-700 duration-1000 sm:block lg:right-12 lg:top-36 ${
-          loaded ? 'scale-100 opacity-100' : 'scale-50 opacity-0'
+          loaded ? 'rotate-0 scale-100 opacity-100' : '-rotate-45 scale-50 opacity-0'
         }`}
-        aria-hidden="true"
       >
-        <div className="relative h-32 w-32 lg:h-40 lg:w-40">
-          <svg viewBox="0 0 100 100" className="h-full w-full animate-spin-slow">
-            <defs>
-              <path id="circle-path" d="M50 50m-38 0a38 38 0 1 1 76 0a38 38 0 1 1-76 0" />
-            </defs>
-            <text className="fill-cream-100 text-[7.6px] font-bold uppercase">
-              <textPath href="#circle-path" textLength="232" lengthAdjust="spacing">Farm fresh · Generations of quality ·</textPath>
-            </text>
-          </svg>
-          <div className="absolute inset-0 m-auto h-12 w-12 rounded-full bg-keshar-500 shadow-[0_0_60px_rgba(233,162,59,.6)] lg:h-14 lg:w-14" />
-        </div>
+        <LogoSeal spin className="h-32 w-32 drop-shadow-[0_12px_40px_rgba(0,0,0,.35)] lg:h-40 lg:w-40" />
       </div>
 
       {/* Copy */}

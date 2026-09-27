@@ -79,8 +79,8 @@
 [data-reveal='blur'] { filter: blur(12px); transform: translateY(16px); }
 /* clip reveals animate the child so the observed element keeps its box (IO ignores clipped targets) */
 [data-reveal='clip'] { opacity: 1; }
-[data-reveal='clip'] > * { clip-path: inset(100% 0 0 0); transform: scale(1.18); transition: clip-path 1.2s cubic-bezier(.7,0,.2,1), transform 1.8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
-[data-reveal='clip'].is-visible > * { clip-path: inset(0 0 0 0); transform: none; }
+[data-reveal='clip'] img { clip-path: inset(100% 0 0 0); transform: scale(1.18); transition: clip-path 1.2s cubic-bezier(.7,0,.2,1), transform 1.8s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+[data-reveal='clip'].is-visible img { clip-path: inset(0 0 0 0); transform: none; }
 [data-reveal='clip-x'] { opacity: 1; clip-path: inset(0 100% 0 0); }
 [data-reveal].is-visible { opacity: 1; transform: none; filter: none; }
 [data-reveal='clip-x'].is-visible { clip-path: inset(0 0 0 0); }
@@ -94,18 +94,19 @@
 .link-draw { background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1.5px; transition: background-size .35s ease; }
 .link-draw:hover, .link-draw[aria-current='true'] { background-size: 100% 1.5px; }
 
-/* logo animation */
-.logo-anim .logo-sun { transform-box: fill-box; transform-origin: center; animation: logo-sun 1.4s cubic-bezier(.2,.8,.2,1) both; }
-.logo-anim .logo-furrow { stroke-dasharray: 40; stroke-dashoffset: 40; animation: logo-draw 1.1s .25s ease-out forwards; }
-.logo-anim .logo-stem { stroke-dasharray: 16; stroke-dashoffset: 16; animation: logo-draw .6s .7s ease-out forwards; }
-.logo-anim .logo-leaf { transform-box: fill-box; animation: logo-leaf .7s cubic-bezier(.3,1.6,.5,1) both; }
-.logo-anim .logo-leaf-l { transform-origin: 100% 100%; animation-delay: 1.05s; }
-.logo-anim .logo-leaf-r { transform-origin: 0% 100%; animation-delay: 1.2s; }
-.logo-hover:hover .logo-leaf-r { animation: leaf-wiggle .8s ease-in-out; transform-origin: 0% 100%; transform-box: fill-box; }
-@keyframes logo-sun { from { transform: translateY(60%); opacity: 0; } to { transform: none; opacity: 1; } }
+/* logo animation: stem rises, onion bowl swells, layers + sprout draw, leaf unfurls */
+.logo-anim .logo-stem { transform-box: fill-box; transform-origin: 50% 100%; animation: logo-rise .7s cubic-bezier(.2,.8,.2,1) both; }
+.logo-anim .logo-bowl { transform-box: fill-box; transform-origin: 0% 100%; animation: logo-swell .8s .35s cubic-bezier(.3,1.5,.5,1) both; }
+.logo-anim .logo-layer { stroke-dasharray: 34; stroke-dashoffset: 34; animation: logo-draw .8s .8s ease-out forwards; }
+.logo-anim .logo-sprout { stroke-dasharray: 8; stroke-dashoffset: 8; animation: logo-draw .4s 1s ease-out forwards; }
+.logo-anim .logo-leaf { transform-box: fill-box; transform-origin: 0% 0%; animation: logo-leaf .8s 1.1s cubic-bezier(.3,1.6,.5,1) both; }
+.logo-hover:hover .logo-leaf { transform-box: fill-box; transform-origin: 0% 0%; animation: leaf-wiggle .9s ease-in-out; }
+.logo-hover:hover .logo-sprout { transform-box: fill-box; transform-origin: 0% 100%; animation: leaf-wiggle .9s .1s ease-in-out; }
+@keyframes logo-rise { from { transform: scaleY(0); } to { transform: none; } }
+@keyframes logo-swell { from { transform: scale(0); opacity: 0; } to { transform: none; opacity: 1; } }
 @keyframes logo-draw { to { stroke-dashoffset: 0; } }
-@keyframes logo-leaf { from { transform: scale(0) rotate(-20deg); } to { transform: none; } }
-@keyframes leaf-wiggle { 0%,100% { transform: rotate(0); } 30% { transform: rotate(-14deg); } 60% { transform: rotate(8deg); } }
+@keyframes logo-leaf { from { transform: scale(0) rotate(-35deg); } to { transform: none; } }
+@keyframes leaf-wiggle { 0%,100% { transform: rotate(0); } 30% { transform: rotate(-12deg); } 60% { transform: rotate(7deg); } }
 
 /* hero progress pill */
 .pill-progress { transform-origin: left; animation: progress var(--dur, 6s) linear forwards; }
@@ -117,7 +118,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
-  [data-reveal], [data-reveal] > *, .split-word > span { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
+  [data-reveal], [data-reveal='clip'] img, .split-word > span { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
 }
 
 .hero-ctrl { @apply inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/25 bg-white/5 text-cream-100 backdrop-blur transition-all hover:scale-105 hover:bg-cream-100 hover:text-forest sm:h-11 sm:w-11; }

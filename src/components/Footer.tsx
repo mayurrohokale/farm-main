@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowUp, ArrowUpRight, Heart, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-react';
-import Logo, { LogoSeal } from './ui/Logo';
+import Logo, { LogoBadge } from './ui/Logo';
 import Marquee from './Marquee';
 import { PRODUCTS, SITE, telHref } from '../lib/site';
 
@@ -26,7 +26,7 @@ const Footer: React.FC = () => (
           </span>
         </h2>
         <div data-reveal="zoom" className="flex shrink-0 items-center gap-6">
-          <LogoSeal spin className="hidden h-28 w-28 sm:block" />
+          <LogoBadge className="hidden h-32 w-32 sm:block" />
           <a href="#contact" className="btn-primary">
             Start an enquiry <ArrowUpRight className="h-4 w-4" />
           </a>

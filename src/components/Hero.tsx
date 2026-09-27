@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 import Picture from './ui/Picture';
-import { LogoSeal } from './ui/Logo';
+import { LogoBadge } from './ui/Logo';
 import { useCountUp, useInView } from '../lib/motion';
 
 const SLIDES = [
@@ -88,13 +88,13 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-forest/70 via-forest/20 to-transparent" />
       </div>
 
-      {/* Brand seal — ring text rotates, monogram stays upright */}
+      {/* Brand badge — the sun rises on load, then the badge gently floats */}
       <div
         className={`absolute right-4 top-28 hidden transition-all delay-700 duration-1000 sm:block lg:right-12 lg:top-36 ${
-          loaded ? 'rotate-0 scale-100 opacity-100' : '-rotate-45 scale-50 opacity-0'
+          loaded ? 'badge-rise rotate-0 scale-100 opacity-100' : '-rotate-12 scale-50 opacity-0'
         }`}
       >
-        <LogoSeal spin className="h-32 w-32 drop-shadow-[0_12px_40px_rgba(0,0,0,.35)] lg:h-40 lg:w-40" />
+        <LogoBadge className="h-36 w-36 animate-floaty drop-shadow-[0_12px_40px_rgba(0,0,0,.35)] lg:h-44 lg:w-44" />
       </div>
 
       {/* Copy */}

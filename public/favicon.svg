@@ -1,11 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#F7F2E8"/>
-  <g transform="translate(4 4) scale(.875)">
-    <path d="M12 12.5c0-1.4 1.1-2.5 2.5-2.5H24v41.5h3.5V55h-17v-3.5H12Z" fill="#14301F"/>
-    <path d="M24 12.5c4.2-.6 7.3-2.6 9.2-6.2 1.6 3.3 4.7 5.3 8.3 6.8 5.2 2.2 8.2 6.3 8.2 11.4 0 7.6-6.3 13-14.3 13H24Z" fill="#A83A5E"/>
-    <path d="M33.2 8.6c-3.4 5-4.6 16.4-3.2 28.2M33.2 8.6c5.2 4.4 8.5 15.6 5.5 28.4" fill="none" stroke="#E7A3B9" stroke-width="1.5" stroke-linecap="round" opacity=".85"/>
-    <path d="M33.2 6.4c-.2-2.4.9-4.2 2.8-5.2" fill="none" stroke="#2F7D3A" stroke-width="2.2" stroke-linecap="round"/>
-    <path d="M27.5 37.5c10.5-.2 18.5 5.8 22.5 17.5-11.6.8-19.6-5.2-22.5-17.5Z" fill="#2F7D3A"/>
-    <path d="M29 39c6 3.2 11.5 8.3 18.5 14.8" fill="none" stroke="#9CCB5B" stroke-width="1.3" stroke-linecap="round"/>
+  <circle cx="32" cy="32" r="32" fill="#1F6B35"/>
+  <svg x="10" y="12" width="44" height="40" viewBox="-4 -8 68 60">
+  <g fill="none" stroke="#F7F2E8" stroke-width="3.6" stroke-linejoin="miter">
+    <!-- R outline + counter -->
+    <path d="M0 0H16C24 0 28 5 28 12C28 18 24.5 22.5 19 23.5L28 44H19L11 25H8V44H0Z"/>
+    <path d="M8 7H15.5C18.5 7 20 9 20 12S18.5 17.5 15.5 17.5H8Z"/>
+    <!-- F outline (top arm + stem) -->
+    <path d="M32 0H58V7H40V44H32Z"/>
   </g>
+  <!-- F middle arm = two-tone leaf -->
+  <path d="M40 23C44 14 51 10.5 60 11 56.5 19.5 50 24 40 23Z" fill="#B7DC7E"/>
+  <path d="M40 23C47 21 53 17 60 11 56.5 19.5 50 24 40 23Z" fill="#9CCB5B"/>
+  <!-- small sprout leaf on top of F -->
+  <path d="M52 0C52-4.5 55-7.5 60-7.5 60-3 57 0 52 0Z" fill="#B7DC7E"/>
+</svg>
 </svg>

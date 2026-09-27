@@ -26,14 +26,15 @@ This file records the brand audit of the previous site and the new design system
 The whole palette comes from the farm's own photographs: deep field greens, red-onion rose, Keshar-mango saffron, turned-earth brown and a warm cream sky.
 
 ### Logo
-`public/brand/logo-mark.svg` · `public/brand/logo-seal.svg` · `public/brand/logo-horizontal.svg` · `public/favicon.svg` · React: `src/components/ui/Logo.tsx`
+`public/brand/logo-mark.svg` · `public/brand/logo-horizontal.svg` · `public/brand/logo-badge.svg` · `public/favicon.svg` · React: `src/components/ui/Logo.tsx`
 
-- **Monogram:** a serif **R** for Rohokale. Its bowl is a **red onion**, the farm's signature crop at 55+ tonnes a year, with its papery layers and sprouting tip. Its leg is a **growing leaf**. So the mark reads as "Rohokale", "onions" and "growth" at the same time, and it can't be mistaken for a generic farm logo.
-- **Seal:** the monogram inside a forest-green ring, with ROHOKALE FARM arched across the top and GENERATIONS OF QUALITY in keshar along the bottom. It's used as a badge in the hero and footer, where the ring slowly rotates and the R stays upright. It also suits packaging, crates and stamps.
-- **Wordmark:** *Rohokale* in Fraunces SemiBold, over `FARM · GENERATIONS OF QUALITY` in Manrope ExtraBold with 0.28em tracking.
-- **On dark backgrounds** the monogram sits on a cream rounded tile. The favicon uses that same tile.
-- **Animated:** on load the stem rises, the onion swells, its layers and sprout draw in, and the leaf unfurls. The leaf and sprout sway on hover.
-- **Minimum size:** 20 px for the monogram and 64 px for the seal (its ring text becomes unreadable below that).
+- **RF monogram:** outlined (line-drawn) **R** and **F**. The F's middle arm is a two-tone leaf, and a small leaf sprouts from its top. It evolves the farm's original "rf" mark into a cleaner, more premium line style.
+- **Wordmark:** `ROHOKALE` in Manrope ExtraBold with 0.14em tracking, over `FARM` in Manrope Bold with 0.62em tracking. Used next to the monogram in the header and footer.
+- **Vintage badge:** a keshar sun rising over furrowed onion fields and green hills, with a `ROHOKALE FARM` banner in Fraunces across the middle, `MAHARASHTRA · INDIA` below, and `GENERATIONS OF QUALITY` on the bottom arc. Used in the hero and footer, and suited to packaging, crates and stamps.
+- **Colour:** the letter lines are `#1F6B35` on light backgrounds and cream on dark ones. The leaf is two-tone (`#6FAE4A` / `#2F7D3A`).
+- **Favicon:** a cream RF on a green circle, with thicker lines so it stays legible at 16–32 px.
+- **Animated:** the letter outlines draw themselves in, then the leaf and sprout grow. The leaf sways on hover. In the hero, the badge's sun rises on load.
+- **Minimum size:** 24 px tall for the monogram (use the favicon version below that) and 96 px for the badge.
 
 ### Colour tokens (`tailwind.config.js`)
 
